@@ -116,20 +116,21 @@ class ArxivFetcher:
             # Semantic Scholar API search endpoint
             url = "https://api.semanticscholar.org/graph/v1/paper/search"
 
-            # 最小限のパラメータでテスト
+            # シンプルなクエリでテスト
+            query = "machine learning OR deep learning OR transformer"
+            
+            # 確実にデータが存在する年で検索
             params = {
-                "query": "transformer",  # 単純な1単語クエリ
+                "query": query,
                 "fields": "paperId,title,authors,abstract,publicationDate,citationCount,externalIds",
-                "limit": 50,  # 固定値
+                "publicationDateOrYear": "2023:2024",  # 2023-2024年
+                "sort": "citationCount:desc",
+                "limit": 100,  # 多めに取得
             }
 
-            print(f"Semantic Scholar検索テスト中...")
-            print(f"URL: {url}")
-            print(f"Params: {params}")
-            
-            # curlコマンドを生成（手動テスト用）
-            query_string = "&".join([f"{k}={v}" for k, v in params.items()])
-            print(f"curl '{url}?{query_string}'")
+            print(f"Semantic Scholar検索中: AI関連論文（2023-2024年）")
+            print(f"日付フィルタ範囲: {start_date.strftime('%Y-%m-%d')} ～ {end_date.strftime('%Y-%m-%d')}")
+            print(f"クエリ: {query}")
 
             # レート制限対応のリトライ機能
             max_retries = 3
@@ -163,9 +164,18 @@ class ArxivFetcher:
             papers_data = data.get("data", [])
             total = data.get("total", 0)
             print(f"Semantic Scholarから{len(papers_data)}件の論文を取得 (total: {total})")
+            
+            # 取得した論文の日付分布を確認
+            date_distribution = {}
+            for paper in papers_data[:10]:  # 最初の10件をチェック
+                pub_date = paper.get("publicationDate", "不明")
+                year = pub_date[:4] if pub_date != "不明" and pub_date else "不明"
+                date_distribution[year] = date_distribution.get(year, 0) + 1
+            print(f"日付分布（上位10件）: {date_distribution}")
 
             # arXiv論文のみフィルタリング
             arxiv_papers = []
+            skipped_count = 0
             for paper_data in papers_data:
                 external_ids = paper_data.get("externalIds", {})
                 arxiv_id = external_ids.get("ArXiv")
@@ -182,11 +192,16 @@ class ArxivFetcher:
                         if pub_date_str:
                             try:
                                 pub_datetime = datetime.fromisoformat(pub_date_str)
-                                # 日付範囲外でも、引用数が高ければ採用（緩いフィルタ）
-                                if pub_datetime < start_date - timedelta(days=365):  # 1年以上古い場合のみ除外
+                                # 厳格な日付フィルタリング（指定期間内のみ採用）
+                                if not (start_date <= pub_datetime <= end_date):
                                     should_include = False
+                                    skipped_count += 1
                             except ValueError:
-                                pass  # 日付パースエラーは無視
+                                # 日付パースエラーの場合は除外
+                                should_include = False
+                        else:
+                            # 日付情報がない場合は除外
+                            should_include = False
 
                         if should_include:
                             arxiv_papers.append(arxiv_paper)
@@ -200,7 +215,22 @@ class ArxivFetcher:
                     if len(arxiv_papers) >= max_results:
                         break
 
-            print(f"arXiv論文として{len(arxiv_papers)}件を抽出")
+            print(f"arXiv論文として{len(arxiv_papers)}件を抽出（日付範囲外でスキップ: {skipped_count}件）")
+            
+            # 0件の場合は、より緩い条件で再試行
+            if len(arxiv_papers) == 0 and len(papers_data) > 0:
+                print("厳格なフィルタで0件のため、最新のarXiv論文を取得します")
+                arxiv_papers = []
+                for paper_data in papers_data[:max_results * 3]:
+                    external_ids = paper_data.get("externalIds", {})
+                    arxiv_id = external_ids.get("ArXiv")
+                    if arxiv_id:
+                        arxiv_paper = self._create_arxiv_paper_from_semantic_scholar(paper_data, arxiv_id)
+                        if arxiv_paper:
+                            arxiv_papers.append(arxiv_paper)
+                            if len(arxiv_papers) >= max_results:
+                                break
+            
             return arxiv_papers
 
         except Exception as e:

@@ -19,14 +19,45 @@ def main():
 
     load_dotenv()
 
-    # 論文を取得
+    # 論文を取得（引用数でソート、既存ファイルをスキップ）
     fetcher = ArxivFetcher()
-    if args.recent:
-        papers = fetcher.fetch_recent_papers(days_back=args.days_back, max_results=args.max_results)
+    
+    # 既存ファイルのチェック用
+    if args.qiita_upload:
+        from qiita_uploader import QiitaUploader
+        uploader = QiitaUploader()
+        
+        # より多くの論文を取得して引用数でソート
+        if args.recent:
+            all_papers = fetcher.fetch_recent_papers_by_citations(
+                days_back=args.days_back, 
+                max_results=args.max_results * 3
+            )
+        else:
+            all_papers = fetcher.fetch_ai_papers(max_results=args.max_results * 3)
+        
+        # 既存ファイルをスキップ
+        filtered_papers = []
+        for paper in all_papers:
+            if not uploader.is_paper_already_processed(paper.arxiv_id):
+                filtered_papers.append(paper)
+                if len(filtered_papers) >= args.max_results:
+                    break
+        
+        papers = filtered_papers
+        print(f"取得した論文数: {len(all_papers)} (既存除外後: {len(papers)})")
+        
+        # 引用数情報を表示
+        if papers:
+            print("引用数順:")
+            for i, paper in enumerate(papers[:5], 1):
+                print(f"  {i}. {paper.title[:50]}... (引用数: {paper.citation_count})")
     else:
-        papers = fetcher.fetch_ai_papers(max_results=args.max_results)
-
-    print(f"取得した論文数: {len(papers)}")
+        if args.recent:
+            papers = fetcher.fetch_recent_papers(days_back=args.days_back, max_results=args.max_results)
+        else:
+            papers = fetcher.fetch_ai_papers(max_results=args.max_results)
+        print(f"取得した論文数: {len(papers)}")
 
     # 要約を生成
     summarizer = PaperSummarizer(enable_qiita_upload=args.qiita_upload)

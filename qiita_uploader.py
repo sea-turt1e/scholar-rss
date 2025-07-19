@@ -154,8 +154,6 @@ slide: false
 ignorePublish: false
 ---
 
-# {summary.title}
-
 ## 論文情報
 
 - **著者**: {', '.join(summary.authors)}
@@ -178,14 +176,6 @@ ignorePublish: false
 
 {summary.implications}
 
-## 参考リンク
-
-- [arXiv]({summary.arxiv_url})
-- [PDF]({summary.pdf_url})
-
----
-
-この記事は自動生成されました。論文の詳細については、元の論文をご確認ください。
 """
 
         return content
@@ -257,6 +247,54 @@ ignorePublish: false
             return []
 
         return [f.name for f in self.public_dir.glob("*.md")]
+
+    def get_existing_arxiv_ids(self) -> List[str]:
+        """
+        既存の記事からarXiv IDを抽出する
+
+        Returns:
+            既存のarXiv IDのリスト
+        """
+        existing_ids = []
+        article_files = self.list_articles()
+        
+        for filename in article_files:
+            # ファイル名からarXiv IDを抽出
+            # 例: "VideoITG_Multimodal_Video_Understanding_with_Instr_2507.13353v1.md"
+            parts = filename.replace('.md', '').split('_')
+            if len(parts) > 0:
+                # 最後の部分がarXiv IDの可能性が高い
+                potential_id = parts[-1]
+                # arXiv IDのパターンをチェック (YYMM.NNNNN形式)
+                if '.' in potential_id and len(potential_id.split('.')) == 2:
+                    try:
+                        year_month, paper_num = potential_id.split('.')
+                        # バージョン番号がある場合は除去
+                        if 'v' in paper_num:
+                            paper_num = paper_num.split('v')[0]
+                        # 数字かどうかチェック
+                        int(year_month)
+                        int(paper_num)
+                        existing_ids.append(f"{year_month}.{paper_num}")
+                    except ValueError:
+                        continue
+        
+        return existing_ids
+
+    def is_paper_already_processed(self, arxiv_id: str) -> bool:
+        """
+        指定されたarXiv IDの論文が既に処理済みかチェックする
+
+        Args:
+            arxiv_id: チェックするarXiv ID
+
+        Returns:
+            既に処理済みの場合True
+        """
+        existing_ids = self.get_existing_arxiv_ids()
+        # バージョン番号を除去してチェック
+        clean_id = arxiv_id.split('v')[0]
+        return clean_id in existing_ids
 
 
 # 使用例

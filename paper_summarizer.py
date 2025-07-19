@@ -285,8 +285,5 @@ arXiv ID: {paper.arxiv_id}
 - [arXiv]({summary.arxiv_url})
 - [PDF]({summary.pdf_url})
 
----
-
-この記事は自動生成されました。論文の詳細については、元の論文をご確認ください。
 """
         return formatted

@@ -19,6 +19,7 @@ class ArxivPaper:
     categories: List[str]
     pdf_url: str
     arxiv_url: str
+    citation_count: int = 0  # 引用数を追加
 
 
 class ArxivFetcher:
@@ -67,6 +68,32 @@ class ArxivFetcher:
                 papers.append(paper)
 
         return papers
+
+    def fetch_recent_papers_by_citations(self, days_back: int = 1, max_results: int = 10) -> List[ArxivPaper]:
+        """
+        最近の論文を引用数でソートして取得する
+
+        Args:
+            days_back: 何日前からの論文を取得するか
+            max_results: 取得する論文の最大数
+
+        Returns:
+            引用数でソートされたArxivPaper のリスト
+        """
+        # より多くの論文を取得してから引用数でソート
+        papers = self.fetch_recent_papers(days_back, max_results * 3)
+        
+        # 引用数を取得（簡易版：arxiv_idからバージョンを除去して検索）
+        papers_with_citations = []
+        for paper in papers:
+            citation_count = self._get_citation_count_simple(paper.arxiv_id)
+            paper.citation_count = citation_count
+            papers_with_citations.append(paper)
+        
+        # 引用数でソート（降順）
+        papers_with_citations.sort(key=lambda x: x.citation_count, reverse=True)
+        
+        return papers_with_citations[:max_results]
 
     def fetch_recent_papers(self, days_back: int = 1, max_results: int = 10) -> List[ArxivPaper]:
         """
@@ -168,8 +195,63 @@ class ArxivFetcher:
                 categories=categories,
                 pdf_url=pdf_url,
                 arxiv_url=arxiv_url,
+                citation_count=0,
             )
 
         except Exception as e:
             print(f"Error parsing entry: {e}")
             return None
+
+    def _get_citation_count_simple(self, arxiv_id: str) -> int:
+        """
+        Semantic Scholar APIから実際の引用数を取得
+        
+        Args:
+            arxiv_id: arXiv ID
+            
+        Returns:
+            引用数
+        """
+        try:
+            # arxiv_idからバージョン番号を除去
+            clean_id = arxiv_id.split('v')[0]
+            
+            # Semantic Scholar APIエンドポイント
+            url = f"https://api.semanticscholar.org/v1/paper/arxiv:{clean_id}"
+            
+            # APIリクエスト（タイムアウト設定）
+            response = requests.get(url, timeout=10)
+            
+            # レート制限を考慮して待機（100 requests per 5 minutes = 3秒間隔）
+            time.sleep(3)
+            
+            if response.status_code == 200:
+                data = response.json()
+                
+                # citationVelocityまたはnumCitedByを取得
+                citation_velocity = data.get('citationVelocity', 0)
+                num_cited_by = data.get('numCitedBy', 0)
+                
+                # citationVelocityがある場合はそれを優先、なければnumCitedByを使用
+                citation_count = citation_velocity if citation_velocity > 0 else num_cited_by
+                
+                print(f"引用数取得成功: {clean_id} -> {citation_count}")
+                return citation_count
+            elif response.status_code == 404:
+                # 論文が見つからない場合
+                print(f"論文が見つかりません: {clean_id}")
+                return 0
+            else:
+                # その他のエラー
+                print(f"API error for {clean_id}: {response.status_code}")
+                return 0
+                
+        except requests.exceptions.Timeout:
+            print(f"API timeout for {clean_id}")
+            return 0
+        except requests.exceptions.RequestException as e:
+            print(f"API request error for {clean_id}: {e}")
+            return 0
+        except Exception as e:
+            print(f"Unexpected error for {clean_id}: {e}")
+            return 0

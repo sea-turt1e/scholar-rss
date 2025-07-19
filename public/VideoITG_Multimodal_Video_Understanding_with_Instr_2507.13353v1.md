@@ -1,15 +1,16 @@
 ---
-title: "[arXiv] VideoITG: Multimodal Video Understanding with Instructed Temporal
-  Grounding"
+title: >-
+  [arXiv] VideoITG: Multimodal Video Understanding with Instructed Temporal
+  Grounding
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-20T06:41:35+09:00'
+id: 4d4b73a7f56f3c6b847b
 organization_url_name: null
 slide: false
 ignorePublish: false

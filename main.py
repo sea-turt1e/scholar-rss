@@ -9,8 +9,8 @@ from paper_summarizer import PaperSummarizer
 
 def main():
     parser = argparse.ArgumentParser(description="ArXiv論文を取得・要約し、Qiitaの記事を作成")
-    parser.add_argument("--max-results", type=int, default=5, help="取得する論文の最大数")
-    parser.add_argument("--days-back", type=int, default=1, help="何日前からの論文を取得するか")
+    parser.add_argument("--max-results", type=int, default=3, help="取得する論文の最大数")
+    parser.add_argument("--days-back", type=int, default=7, help="何日前からの論文を取得するか")
     parser.add_argument("--qiita-upload", action="store_true", help="Qiitaの記事を自動作成する")
     parser.add_argument("--private", action="store_true", help="限定共有記事として作成する")
     parser.add_argument("--recent", action="store_true", help="最新の論文を取得（デフォルトはAI関連論文）")
@@ -33,10 +33,7 @@ def main():
 
     if args.qiita_upload:
         # Qiitaアップロード機能付きで実行
-        access_token = os.getenv("QIITA_ACCESS_TOKEN")
-        summaries = summarizer.summarize_papers_with_qiita_upload(
-            papers, private=args.private, access_token=access_token
-        )
+        summaries = summarizer.summarize_papers_with_qiita_upload(papers, private=args.private)
     else:
         # 通常の要約のみ
         summaries = summarizer.summarize_papers(papers)

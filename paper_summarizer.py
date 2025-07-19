@@ -81,7 +81,6 @@ class PaperSummarizer:
         self,
         papers: List[ArxivPaper],
         private: bool = False,
-        access_token: Optional[str] = None,
     ) -> List[PaperSummary]:
         """
         複数の論文を要約してQiitaの記事を自動作成する
@@ -89,7 +88,6 @@ class PaperSummarizer:
         Args:
             papers: 要約する論文のリスト
             private: 限定共有記事として作成するかどうか
-            access_token: Qiitaのアクセストークン
 
         Returns:
             PaperSummary のリスト
@@ -107,12 +105,16 @@ class PaperSummarizer:
             try:
                 from qiita_uploader import QiitaUploader
 
-                uploader = QiitaUploader(access_token=access_token)
-                if uploader.setup_qiita_cli():
-                    success_count = uploader.create_articles(summaries, private=private)
-                    print(f"Successfully uploaded {success_count} articles to Qiita")
-                else:
-                    print("Error: Qiita CLI setup failed")
+                uploader = QiitaUploader()
+                success_count = uploader.create_articles(summaries, private=private)
+                print(f"Successfully created {success_count} article files")
+
+                # GitHubに記事をプッシュ
+                if summaries:
+                    first_summary = summaries[0]
+                    safe_title = uploader._create_safe_filename(first_summary.title)
+                    filename = f"{safe_title}_{first_summary.arxiv_id}"
+                    uploader.push_to_github(filename)
             except ImportError:
                 print("Warning: qiita_uploader not available. Skipping Qiita upload.")
             except Exception as e:
@@ -155,7 +157,9 @@ arXiv ID: {paper.arxiv_id}
 
 ---
 
-回答は上記の形式に従って、技術的な内容も含めて分かりやすく日本語で説明してください。
+# ルール
+- 回答は上記の形式に従って、技術的な内容も含めて分かりやすく日本語で説明してください。
+- マークダウン形式で書いてください。
 """
         return prompt
 

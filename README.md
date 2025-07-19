@@ -8,12 +8,14 @@ arXiv APIを使用してAI関連の論文を自動取得し、Claude CLIを使�
 - 最新論文の取得（指定期間内）
 - Claude CLIを使用した論文の日本語要約
 - 構造化された要約データの生成
-- Zennスクラップ用のMarkdownフォーマット出力
+- Qiita記事用のMarkdownフォーマット出力
+- **NEW**: Qiita CLIを使用したQiita記事の自動作成
 
 ## 必要な依存関係
 
 - Python 3.12以上
 - Claude CLI
+- Qiita CLI
 
 ### パッケージ依存関係
 
@@ -46,6 +48,15 @@ uv install
 claude --help
 ```
 
+4. Qiita CLIをインストールし、設定します：
+```bash
+# Node.jsが必要
+npm install -g @qiita/qiita-cli
+
+# Qiitaのアクセストークンを環境変数に設定
+export QIITA_ACCESS_TOKEN="your_qiita_access_token"
+```
+
 ## 使用方法
 
 ### 基本的な使用例
@@ -76,13 +87,50 @@ for summary in summaries:
 recent_papers = fetcher.fetch_recent_papers(days_back=3, max_results=10)
 ```
 
-### Zennスクラップ用にフォーマット
+### Qiita記事用にフォーマット
 
 ```python
-# Zennスクラップ用のMarkdownを生成
+# Qiita記事用のMarkdownを生成
 for summary in summaries:
-    zenn_markdown = summarizer.format_for_zenn(summary)
-    print(zenn_markdown)
+    qiita_markdown = summarizer.format_for_qiita(summary)
+    print(qiita_markdown)
+```
+
+### Qiita記事自動作成
+
+```python
+from arxiv_fetcher import ArxivFetcher
+from paper_summarizer import PaperSummarizer
+
+def main():
+    # 論文を取得
+    fetcher = ArxivFetcher()
+    papers = fetcher.fetch_ai_papers(max_results=3)
+    
+    # Qiitaアップロード機能を有効にして要約
+    summarizer = PaperSummarizer(enable_qiita_upload=True)
+    summaries = summarizer.summarize_papers_with_qiita_upload(papers, private=False)
+    
+    print(f"Created {len(summaries)} Qiita articles")
+
+# 実行
+main()
+```
+
+### コマンドライン使用
+
+```bash
+# 基本的な使用
+python main.py
+
+# 10件の論文を取得し、Qiita記事を自動作成
+python main.py --max-results 10 --qiita-upload
+
+# 過去3日間の論文を取得してQiita記事を作成（限定共有）
+python main.py --recent --days-back 3 --qiita-upload --private
+
+# 使用可能なオプション
+python main.py --help
 ```
 
 ## クラス説明
@@ -109,12 +157,28 @@ Claude CLIを使用して論文を要約するクラス。
 **主要メソッド：**
 - `summarize_paper(paper)`: 単一論文の要約
 - `summarize_papers(papers)`: 複数論文の要約
-- `format_for_zenn(summary)`: Zennスクラップ用フォーマット
+- `summarize_papers_with_qiita_upload(papers, private, access_token)`: 複数論文の要約とQiita記事自動作成
+- `format_for_qiita(summary)`: Qiita記事用フォーマット
 
 **生成される要約構造：**
 - 要約（3-4文の概要）
 - 主要なポイント（3つの重要点）
 - 意義・影響（研究の意義と今後の影響）
+
+### QiitaUploader
+
+Qiita CLIを使用してQiitaの記事を自動作成するクラス。
+
+**主要メソッド：**
+- `create_article(summary, private)`: 単一論文要約から記事を作成
+- `create_articles(summaries, private)`: 複数論文要約から記事を作成
+- `setup_qiita_cli()`: Qiita CLIのセットアップ確認
+
+**特徴：**
+- Qiita CLIとの統合
+- 公開/限定共有記事の選択
+- 自動的な論文情報とタグ付け
+- エラーハンドリングと進捗表示
 
 ## データクラス
 
@@ -157,6 +221,10 @@ class PaperSummary:
 - arXiv APIの利用制限に配慮し、デフォルトで3秒の待機時間が設定されています
 - Claude CLIが正しくインストールされ、設定されている必要があります
 - 論文の要約には時間がかかる場合があります（1論文あたり数十秒〜数分）
+- Qiita記事自動作成機能を使用する場合：
+  - Qiita CLIがインストールされている必要があります
+  - 環境変数`QIITA_ACCESS_TOKEN`にQiitaのアクセストークンを設定する必要があります
+  - アクセストークンは[Qiitaの設定ページ](https://qiita.com/settings/applications)で取得できます
 
 ## ライセンス
 

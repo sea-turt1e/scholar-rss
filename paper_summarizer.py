@@ -1,4 +1,3 @@
-import json
 import subprocess
 from dataclasses import dataclass
 from typing import Dict, List, Optional
@@ -23,8 +22,9 @@ class PaperSummary:
 class PaperSummarizer:
     """Claude CLIを使用して論文を要約するクラス"""
 
-    def __init__(self):
+    def __init__(self, enable_qiita_upload: bool = False):
         self.claude_cmd = "claude"
+        self.enable_qiita_upload = enable_qiita_upload
 
     def summarize_paper(self, paper: ArxivPaper) -> Optional[PaperSummary]:
         """
@@ -74,6 +74,49 @@ class PaperSummarizer:
             summary = self.summarize_paper(paper)
             if summary:
                 summaries.append(summary)
+
+        return summaries
+
+    def summarize_papers_with_qiita_upload(
+        self,
+        papers: List[ArxivPaper],
+        private: bool = False,
+        access_token: Optional[str] = None,
+    ) -> List[PaperSummary]:
+        """
+        複数の論文を要約してQiitaの記事を自動作成する
+
+        Args:
+            papers: 要約する論文のリスト
+            private: 限定共有記事として作成するかどうか
+            access_token: Qiitaのアクセストークン
+
+        Returns:
+            PaperSummary のリスト
+        """
+        summaries = []
+
+        for paper in papers:
+            print(f"Summarizing: {paper.title}")
+            summary = self.summarize_paper(paper)
+            if summary:
+                summaries.append(summary)
+
+        # Qiitaアップロードが有効な場合のみ実行
+        if self.enable_qiita_upload and summaries:
+            try:
+                from qiita_uploader import QiitaUploader
+
+                uploader = QiitaUploader(access_token=access_token)
+                if uploader.setup_qiita_cli():
+                    success_count = uploader.create_articles(summaries, private=private)
+                    print(f"Successfully uploaded {success_count} articles to Qiita")
+                else:
+                    print("Error: Qiita CLI setup failed")
+            except ImportError:
+                print("Warning: qiita_uploader not available. Skipping Qiita upload.")
+            except Exception as e:
+                print(f"Error uploading to Qiita: {e}")
 
         return summaries
 
@@ -202,21 +245,23 @@ arXiv ID: {paper.arxiv_id}
 
         return points
 
-    def format_for_zenn(self, summary: PaperSummary) -> str:
+    def format_for_qiita(self, summary: PaperSummary) -> str:
         """
-        Zennのスクラップ用にフォーマット
+        Qiitaの記事用にフォーマット
 
         Args:
             summary: 論文要約
 
         Returns:
-            Zenn用のMarkdownテキスト
+            Qiita用のMarkdownテキスト
         """
         formatted = f"""# {summary.title}
 
-**著者**: {', '.join(summary.authors)}  
-**arXiv ID**: [{summary.arxiv_id}]({summary.arxiv_url})  
-**PDF**: [Link]({summary.pdf_url})
+## 論文情報
+
+- **著者**: {', '.join(summary.authors)}
+- **arXiv ID**: [{summary.arxiv_id}]({summary.arxiv_url})
+- **PDF**: [Link]({summary.pdf_url})
 
 ## 要約
 {summary.summary}
@@ -231,6 +276,13 @@ arXiv ID: {paper.arxiv_id}
 ## 意義・影響
 {summary.implications}
 
+## 参考リンク
+
+- [arXiv]({summary.arxiv_url})
+- [PDF]({summary.pdf_url})
+
 ---
+
+この記事は自動生成されました。論文の詳細については、元の論文をご確認ください。
 """
         return formatted

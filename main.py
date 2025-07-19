@@ -14,16 +14,23 @@ def main():
     parser.add_argument("--qiita-upload", action="store_true", help="Qiitaの記事を自動作成する")
     parser.add_argument("--private", action="store_true", help="限定共有記事として作成する")
     parser.add_argument("--recent", action="store_true", help="最新の論文を取得（デフォルトはAI関連論文）")
+    parser.add_argument("--semantic-scholar", action="store_true", help="Semantic Scholarから被引用数上位のAI関連arXiv論文を取得")
 
     args = parser.parse_args()
 
     load_dotenv()
 
-    # 論文を取得（引用数でソート、既存ファイルをスキップ）
+    # 論文を取得
     fetcher = ArxivFetcher()
     
-    # 既存ファイルのチェック用
-    if args.qiita_upload:
+    # 取得方法を選択
+    if args.semantic_scholar:
+        # Semantic Scholarから被引用数上位のAI関連arXiv論文を取得
+        all_papers = fetcher.fetch_ai_papers_by_citation_from_semantic_scholar(
+            days_back=args.days_back,
+            max_results=args.max_results * 2  # 既存除外を考慮して多めに取得
+        )
+    elif args.qiita_upload:
         from qiita_uploader import QiitaUploader
         uploader = QiitaUploader()
         
@@ -35,6 +42,16 @@ def main():
             )
         else:
             all_papers = fetcher.fetch_ai_papers(max_results=args.max_results * 3)
+    else:
+        if args.recent:
+            all_papers = fetcher.fetch_recent_papers(days_back=args.days_back, max_results=args.max_results)
+        else:
+            all_papers = fetcher.fetch_ai_papers(max_results=args.max_results)
+
+    # 既存ファイルのチェック用（Qiitaアップロード時のみ）
+    if args.qiita_upload:
+        from qiita_uploader import QiitaUploader
+        uploader = QiitaUploader()
         
         # 既存ファイルをスキップ
         filtered_papers = []
@@ -53,10 +70,7 @@ def main():
             for i, paper in enumerate(papers[:5], 1):
                 print(f"  {i}. {paper.title[:50]}... (引用数: {paper.citation_count})")
     else:
-        if args.recent:
-            papers = fetcher.fetch_recent_papers(days_back=args.days_back, max_results=args.max_results)
-        else:
-            papers = fetcher.fetch_ai_papers(max_results=args.max_results)
+        papers = all_papers
         print(f"取得した論文数: {len(papers)}")
 
     # 要約を生成

@@ -201,3 +201,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+.env
+dist
+node_modules
+tmp
+.github/workflows/publish.yml

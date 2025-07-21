@@ -59,16 +59,17 @@ def main():
         print("\n")
 
     # 結果を表示
-    # for summary in summaries:
-    #     print("\n" + "=" * 50)
-    #     print(f"タイトル: {summary.title}")
-    #     print(f"著者: {', '.join(summary.authors)}")
-    #     print(f"arXiv ID: {summary.arxiv_id}")
-    #     print(f"要約: {summary.summary}")
-    #     print("主要なポイント:")
-    #     for i, point in enumerate(summary.key_points, 1):
-    #         print(f"  {i}. {point}")
-    #     print(f"意義・影響: {summary.implications}")
+    for summary in summaries:
+        print("\n" + "=" * 50)
+        print(f"タイトル: {summary.title}")
+        print(f"著者: {', '.join(summary.authors)}")
+        print(f"URL: {summary.pdf_url}")
+        print(f"方法: {summary.methodology}")
+        print(f"要約: {summary.summary}")
+        print("主要なポイント:")
+        for i, point in enumerate(summary.key_points, 1):
+            print(f"  {i}. {point}")
+        print(f"意義・影響: {summary.implications}")
 
 
 if __name__ == "__main__":

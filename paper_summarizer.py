@@ -2,7 +2,7 @@ import subprocess
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from pdf_summarizer import OpenAIPDFSummarizer
+from pdf_summarizer import OpenAIPDFSummarizer, PDFSummary
 from scholar_paper_fetcher import ScholarPaper
 
 
@@ -14,6 +14,7 @@ class PaperSummary:
     authors: List[str]
     summary: str
     key_points: List[str]
+    methodology: str
     implications: str
     pdf_url: str
     paper_link: str
@@ -38,10 +39,9 @@ class PaperSummarizer:
             PaperSummary オブジェクト
         """
         try:
-            summary_text = self.openai_summarizer.summarize_paper_from_url(paper, paper.pdf_link)
-            return summary_text
-            # summary = self._parse_summary_result(paper, summary_text)
-            # return summary
+            pdf_summary = self.openai_summarizer.summarize_paper_from_url(paper, paper.pdf_link)
+            summary = self._parse_summary_result(paper, pdf_summary)
+            return summary
 
         except Exception as e:
             print(f"Error summarizing paper {paper.id}: {e}")
@@ -155,7 +155,7 @@ PDF Link: {paper.pdf_link}
 """
         return prompt
 
-    def _parse_summary_result(self, paper: ScholarPaper, summary_text: str) -> PaperSummary:
+    def _parse_summary_result(self, paper: ScholarPaper, pdf_summary: PDFSummary) -> PaperSummary:
         """
         要約結果をパースしてPaperSummaryオブジェクトを作成
 
@@ -167,17 +167,13 @@ PDF Link: {paper.pdf_link}
             PaperSummary オブジェクト
         """
         # 要約テキストから各セクションを抽出
-        sections = self._extract_sections(summary_text)
-
-        # 主要なポイントを抽出
-        key_points = self._extract_key_points(sections.get("主要なポイント", ""))
-
         return PaperSummary(
             title=paper.title,
             authors=paper.authors,
-            summary=sections.get("要約", summary_text),
-            key_points=key_points,
-            implications=sections.get("意義・影響", ""),
+            summary=pdf_summary.summary,
+            key_points=pdf_summary.key_points,
+            methodology=pdf_summary.methodology,
+            implications=pdf_summary.implications,
             pdf_url=paper.pdf_link,
             paper_link=paper.link,
         )

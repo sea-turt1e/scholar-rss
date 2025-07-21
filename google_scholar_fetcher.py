@@ -222,7 +222,7 @@ class EfficientScholarFetcher:
             # f'"generative AI" OR "foundation model" {current_year}',
         ]
 
-    def fetch_daily_papers(self, force: bool = False, prefer_recent: bool = False) -> List[Dict]:
+    def fetch_daily_papers(self, force: bool = False, prefer_recent: bool = False, max_papers: int = 1) -> List[Dict]:
         """
         1日3件の高引用論文を取得（コスパ重視）
 
@@ -330,7 +330,7 @@ class EfficientScholarFetcher:
             for paper in free_papers:
                 if paper["id"] not in all_fetched_ids:
                     new_papers.append(paper)
-                    if len(new_papers) >= 3:  # 1日3件まで
+                    if len(new_papers) >= max_papers:  # 1日3件まで
                         break
 
             logger.info(f"Selected {len(new_papers)} new papers for today")

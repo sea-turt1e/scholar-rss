@@ -32,7 +32,7 @@ class ScholarPaperFetcher:
         """
         self.fetcher = EfficientScholarFetcher(api_key, cache_dir)
 
-    def fetch_papers(self, force: bool = False, prefer_recent: bool = False) -> List[ScholarPaper]:
+    def fetch_papers(self, force: bool = False, prefer_recent: bool = False, max_papers: int = 1) -> List[ScholarPaper]:
         """
         Google Scholarから論文を取得
 
@@ -44,7 +44,7 @@ class ScholarPaperFetcher:
             ScholarPaperのリスト
         """
         # Google Scholar Fetcherから論文を取得
-        papers_data = self.fetcher.fetch_daily_papers(force=force, prefer_recent=prefer_recent)
+        papers_data = self.fetcher.fetch_daily_papers(force=force, prefer_recent=prefer_recent, max_papers=max_papers)
 
         # データクラスに変換
         papers = []

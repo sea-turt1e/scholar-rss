@@ -85,6 +85,9 @@ class PaperSummarizer:
         summaries = []
 
         for paper in papers:
+            import ipdb
+
+            ipdb.set_trace()
             print(f"Summarizing: {paper.title}")
             summary = self.summarize_paper(paper)
             if summary:
@@ -101,10 +104,10 @@ class PaperSummarizer:
 
                 # GitHubに記事をプッシュ
                 if summaries:
-                    first_summary = summaries[0]
-                    safe_title = uploader._create_safe_filename(first_summary.title)
-                    filename = f"{safe_title}_{first_summary.arxiv_id}"
-                    uploader.push_to_github(filename)
+                    for summary in summaries:
+                        safe_title = uploader._create_safe_filename(summary.title)
+                        filename = f"{safe_title}"
+                        uploader.push_to_github(filename)
             except ImportError:
                 print("Warning: qiita_uploader not available. Skipping Qiita upload.")
             except Exception as e:

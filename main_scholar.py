@@ -28,26 +28,26 @@ def main():
     # 論文を取得
     print("=== Fetching papers from Google Scholar ===")
     fetcher = ScholarPaperFetcher(api_key)
-    papers = fetcher.fetch_papers(force=args.force, prefer_recent=args.prefer_recent)
+    papers = fetcher.fetch_papers(force=args.force, prefer_recent=args.prefer_recent, max_papers=args.max_papers)
 
     if not papers:
         print("No papers found")
         return
 
     # PDFリンクがある論文を抽出
-    papers_with_pdf = fetcher.get_pdf_links(papers)
+    # papers_with_pdf = fetcher.get_pdf_links(papers)
 
-    if not papers_with_pdf:
-        print("No papers with PDF links found")
-        return
+    # if not papers_with_pdf:
+    #     print("No papers with PDF links found")
+    #     return
 
-    print(f"\nFound {len(papers_with_pdf)} papers with PDF links")
+    # print(f"\nFound {len(papers_with_pdf)} papers with PDF links")
 
     summarizer = PaperSummarizer(enable_qiita_upload=args.qiita_upload)
 
     if args.qiita_upload:
         # Qiitaアップロード機能付きで実行
-        summaries = summarizer.summarize_papers_with_qiita_upload(papers_with_pdf, private=args.private)
+        summaries = summarizer.summarize_papers_with_qiita_upload(papers)
     else:
         # 通常の要約のみ
         summaries = summarizer.summarize_papers(papers)

@@ -91,9 +91,6 @@ class PaperSummarizer:
                 summaries.append(summary)
 
         # Qiitaアップロードが有効な場合のみ実行
-        import ipdb
-
-        ipdb.set_trace()
         if self.enable_qiita_upload and summaries:
             try:
                 from qiita_uploader import QiitaUploader

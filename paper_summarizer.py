@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 from arxiv_fetcher import ArxivPaper
+from scholar_paper_fetcher import ScholarPaper
 
 
 @dataclass
@@ -122,7 +123,7 @@ class PaperSummarizer:
 
         return summaries
 
-    def _create_summary_prompt(self, paper: ArxivPaper) -> str:
+    def _create_summary_prompt(self, paper: ScholarPaper) -> str:
         """
         要約用のプロンプトを作成
 
@@ -136,11 +137,13 @@ class PaperSummarizer:
 
 タイトル: {paper.title}
 著者: {', '.join(paper.authors)}
-カテゴリ: {', '.join(paper.categories)}
-arXiv ID: {paper.arxiv_id}
+発行年: {paper.year}
+論文ページ: {paper.link}
+PDF Link: {paper.pdf_link}
+被引用数（要約時点）: {paper.citations}
 
 概要:
-{paper.abstract}
+{paper.snippet}
 
 以下の形式で要約してください：
 

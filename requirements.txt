@@ -1,0 +1,7 @@
+serpapi
+python-dotenv
+PyPDF2
+pdf2image
+PyMuPDF
+requests
+pillow

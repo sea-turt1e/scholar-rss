@@ -20,6 +20,7 @@ class ArxivPaper:
     pdf_url: str
     arxiv_url: str
     citation_count: int = 0  # 引用数を追加
+    citation_velocity: int = 0  # 引用速度を追加
 
 
 class ArxivFetcher:
@@ -86,8 +87,9 @@ class ArxivFetcher:
         # 引用数を取得（簡易版：arxiv_idからバージョンを除去して検索）
         papers_with_citations = []
         for paper in papers:
-            citation_count = self._get_citation_count_simple(paper.arxiv_id)
+            citation_count, citation_velocity = self._get_citation_count_simple(paper.arxiv_id)
             paper.citation_count = citation_count
+            paper.citation_velocity = citation_velocity
             papers_with_citations.append(paper)
 
         # 引用数でソート（降順）
@@ -282,6 +284,7 @@ class ArxivFetcher:
                 pdf_url=pdf_url,
                 arxiv_url=arxiv_url,
                 citation_count=citation_count,
+                citation_velocity=0,  # Semantic Scholarから取得時は別途設定
             )
 
         except Exception as e:
@@ -389,38 +392,39 @@ class ArxivFetcher:
                 pdf_url=pdf_url,
                 arxiv_url=arxiv_url,
                 citation_count=0,
+                citation_velocity=0,
             )
 
         except Exception as e:
             print(f"Error parsing entry: {e}")
             return None
 
-    def _get_citation_count_simple(self, arxiv_id: str) -> int:
+    def _get_citation_count_simple(self, arxiv_id: str) -> tuple[int, int]:
         """
-        Semantic Scholar APIから実際の引用数を取得
+        Semantic Scholar APIから実際の引用数と引用速度を取得
 
         Args:
             arxiv_id: arXiv ID
 
         Returns:
-            引用数
+            (引用数, 引用速度)のタプル
         """
         try:
             # arxiv_idからバージョン番号を除去
             clean_id = arxiv_id.split("v")[0]
 
-            # Semantic Scholar Graph API v2エンドポイント
-            url = f"https://api.semanticscholar.org/graph/v1/paper/arXiv:{clean_id}"
+            # Semantic Scholar API v1エンドポイント
+            url = f"https://api.semanticscholar.org/v1/paper/arxiv:{clean_id}"
 
-            # 必要なフィールドを指定
-            params = {"fields": "citationCount"}
+            # v1 APIではparamsは不要（全フィールドが返される）
+            params = None
 
             # デバッグ情報
             print(f"API URL: {url}")
             print(f"Parameters: {params}")
 
             # APIリクエスト（タイムアウト設定）
-            response = requests.get(url, params=params, timeout=10)
+            response = requests.get(url, timeout=10)
 
             # レート制限を考慮して待機（100 requests per 5 minutes = 3秒間隔）
             time.sleep(3)
@@ -433,26 +437,27 @@ class ArxivFetcher:
             if response.status_code == 200:
                 data = response.json()
 
-                # citationCountを取得
-                citation_count = data.get("citationCount", 0)
+                # numCitedByとcitationVelocityを取得（v1 APIのフィールド名）
+                citation_count = data.get("numCitedBy", 0)
+                citation_velocity = data.get("citationVelocity", 0)
 
-                print(f"引用数取得成功: {clean_id} -> {citation_count}")
-                return citation_count
+                print(f"引用数取得成功: {clean_id} -> 引用数: {citation_count}, 引用速度: {citation_velocity}")
+                return citation_count, citation_velocity
             elif response.status_code == 404:
                 # 論文が見つからない場合
                 print(f"論文が見つかりません: {clean_id}")
-                return 0
+                return 0, 0
             else:
                 # その他のエラー
                 print(f"API error for {clean_id}: {response.status_code}")
-                return 0
+                return 0, 0
 
         except requests.exceptions.Timeout:
             print(f"API timeout for {clean_id}")
-            return 0
+            return 0, 0
         except requests.exceptions.RequestException as e:
             print(f"API request error for {clean_id}: {e}")
-            return 0
+            return 0, 0
         except Exception as e:
             print(f"Unexpected error for {clean_id}: {e}")
-            return 0
+            return 0, 0

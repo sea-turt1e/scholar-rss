@@ -1,5 +1,6 @@
 import argparse
 import os
+from datetime import datetime
 
 from dotenv import load_dotenv
 
@@ -25,11 +26,40 @@ def main():
     
     # 取得方法を選択
     if args.semantic_scholar:
-        # Semantic Scholarから被引用数上位のAI関連arXiv論文を取得
-        all_papers = fetcher.fetch_ai_papers_by_citation_from_semantic_scholar(
-            days_back=args.days_back,
-            max_results=args.max_results * 2  # 既存除外を考慮して多めに取得
-        )
+        # まずarXiv APIから論文を取得（多めに取得）
+        if args.recent:
+            all_papers = fetcher.fetch_recent_papers(days_back=args.days_back, max_results=args.max_results * 10)
+        else:
+            all_papers = fetcher.fetch_ai_papers(max_results=args.max_results * 10)
+        
+        # その後、Semantic Scholarで引用数を補完
+        print("arXiv APIから論文を取得後、Semantic Scholarで引用数と引用速度を取得します...")
+        papers_with_citations = []
+        current_year = datetime.now().year
+        
+        for paper in all_papers:
+            citation_count, citation_velocity = fetcher._get_citation_count_simple(paper.arxiv_id)
+            paper.citation_count = citation_count
+            paper.citation_velocity = citation_velocity
+            
+            # フィルタリング条件
+            # 1. 引用数が0より大きい
+            # 2. または、今年の論文で引用速度が0より大きい
+            paper_year = paper.published.year
+            if citation_count > 0 or (paper_year >= current_year and citation_velocity > 0):
+                papers_with_citations.append(paper)
+                print(f"取得成功: {paper.title[:50]}... (引用数: {citation_count}, 引用速度: {citation_velocity}, 年: {paper_year})")
+            
+            # 十分な数の論文が集まったら終了
+            if len(papers_with_citations) >= args.max_results * 2:
+                break
+        
+        # 引用数でソート（引用速度も考慮）
+        papers_with_citations.sort(key=lambda x: (x.citation_count, x.citation_velocity), reverse=True)
+        all_papers = papers_with_citations[:args.max_results]
+        
+        print(f"\n条件を満たす論文数: {len(papers_with_citations)} (要求数: {args.max_results})")
+        
     elif args.qiita_upload:
         from qiita_uploader import QiitaUploader
         uploader = QiitaUploader()

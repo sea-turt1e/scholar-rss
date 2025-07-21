@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
 import requests
+from openai import OpenAI
 
 try:
     from pdf2image import convert_from_path
@@ -523,3 +524,134 @@ class PDFSummarizer:
 
         except Exception as e:
             print(f"Error cleaning up temp files: {e}")
+
+
+class OpenAIPDFSummarizer:
+    """OpenAI APIを使用してPDFを直接要約するクラス"""
+
+    def __init__(self):
+        """OpenAI APIクライアントを初期化"""
+        self.client = OpenAI()
+
+    def summarize_paper_from_url(self, paper: ScholarPaper, pdf_url: str) -> Optional[PDFSummary]:
+        """
+        PDFのURLから直接論文を要約する
+
+        Args:
+            paper: ScholarPaperオブジェクト
+            pdf_url: PDFのURL
+
+        Returns:
+            PDFSummaryオブジェクト
+        """
+        try:
+            # プロンプトを作成
+            prompt = self._create_openai_prompt(paper)
+
+            # OpenAI APIを呼び出し
+            response = self.client.responses.create(
+                model="gpt-4.1-mini",
+                input=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "input_text", "text": prompt},
+                            {
+                                "type": "input_file",
+                                "file_url": pdf_url,
+                            },
+                        ],
+                    }
+                ],
+            )
+
+            # 結果をパース
+            summary_text = response.output_text
+            return self._parse_openai_summary(paper, summary_text)
+
+        except Exception as e:
+            print(f"Error summarizing paper with OpenAI: {e}")
+            return None
+
+    def _create_openai_prompt(self, paper: ScholarPaper) -> str:
+        """OpenAI用の要約プロンプトを作成"""
+        return f"""以下のPDF論文を日本語で詳細に要約してください。
+
+タイトル: {paper.title}
+著者: {', '.join(paper.authors) if paper.authors else '不明'}
+引用数: {paper.citations}
+概要: {paper.snippet}
+
+以下の形式で要約してください：
+
+## 要約
+（論文の全体的な概要を3-5文で説明）
+
+## 主要なポイント
+1. （最も重要なポイント）
+2. （2番目に重要なポイント）
+3. （3番目に重要なポイント）
+（必要に応じて4, 5...を追加）
+
+## 手法・アプローチ
+（論文で提案された手法やアプローチを具体的に説明）
+
+## 実験結果・成果
+（主要な実験結果や成果を具体的な数値とともに説明）
+
+## 意義・影響
+（この研究の学術的・実用的な意義と今後の影響について説明）
+
+---
+
+# ルール
+- PDFの内容を正確に読み取り、技術的な詳細も含めて説明してください
+- 図表から読み取れる重要な情報も含めてください
+- 専門用語は適切に日本語訳するか、カタカナ表記にしてください
+- マークダウン形式で書いてください
+"""
+
+    def _parse_openai_summary(self, paper: ScholarPaper, summary_text: str) -> PDFSummary:
+        """OpenAI APIの結果をパース"""
+        sections = {}
+        current_section = None
+        current_content = []
+
+        for line in summary_text.split("\n"):
+            line = line.strip()
+
+            if line.startswith("## "):
+                # 前のセクションを保存
+                if current_section:
+                    sections[current_section] = "\n".join(current_content).strip()
+
+                # 新しいセクションを開始
+                current_section = line[3:].strip()
+                current_content = []
+            else:
+                if current_section:
+                    current_content.append(line)
+
+        # 最後のセクションを保存
+        if current_section:
+            sections[current_section] = "\n".join(current_content).strip()
+
+        # 主要なポイントを抽出
+        key_points = []
+        key_points_text = sections.get("主要なポイント", "")
+        for line in key_points_text.split("\n"):
+            line = line.strip()
+            if line and (line[0].isdigit() or line.startswith("-")):
+                # 番号や記号を除去
+                point = line.split(".", 1)[-1].strip() if "." in line else line.lstrip("-").strip()
+                if point:
+                    key_points.append(point)
+
+        return PDFSummary(
+            paper=paper,
+            summary=sections.get("要約", summary_text),
+            key_points=key_points,
+            implications=sections.get("意義・影響", ""),
+            methodology=sections.get("手法・アプローチ"),
+            results=sections.get("実験結果・成果"),
+        )

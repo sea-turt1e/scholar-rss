@@ -2,7 +2,7 @@ import subprocess
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from arxiv_fetcher import ArxivPaper
+from pdf_summarizer import OpenAIPDFSummarizer
 from scholar_paper_fetcher import ScholarPaper
 
 
@@ -12,12 +12,11 @@ class PaperSummary:
 
     title: str
     authors: List[str]
-    arxiv_id: str
     summary: str
     key_points: List[str]
     implications: str
     pdf_url: str
-    arxiv_url: str
+    paper_link: str
 
 
 class PaperSummarizer:
@@ -26,8 +25,9 @@ class PaperSummarizer:
     def __init__(self, enable_qiita_upload: bool = False):
         self.claude_cmd = "claude"
         self.enable_qiita_upload = enable_qiita_upload
+        self.openai_summarizer = OpenAIPDFSummarizer()
 
-    def summarize_paper(self, paper: ArxivPaper) -> Optional[PaperSummary]:
+    def summarize_paper(self, paper: ScholarPaper) -> Optional[PaperSummary]:
         """
         論文を要約する
 
@@ -38,27 +38,16 @@ class PaperSummarizer:
             PaperSummary オブジェクト
         """
         try:
-            # 要約用のプロンプトを作成
-            prompt = self._create_summary_prompt(paper)
-
-            # claude CLIを実行
-            result = subprocess.run([self.claude_cmd, "-p", prompt], capture_output=True, text=True, timeout=60)
-
-            if result.returncode != 0:
-                print(f"Error running claude: {result.stderr}")
-                return None
-
-            # 要約結果をパース
-            summary_text = result.stdout.strip()
-            summary = self._parse_summary_result(paper, summary_text)
-
-            return summary
+            summary_text = self.openai_summarizer.summarize_paper_from_url(paper, paper.pdf_link)
+            return summary_text
+            # summary = self._parse_summary_result(paper, summary_text)
+            # return summary
 
         except Exception as e:
-            print(f"Error summarizing paper {paper.arxiv_id}: {e}")
+            print(f"Error summarizing paper {paper.id}: {e}")
             return None
 
-    def summarize_papers(self, papers: List[ArxivPaper]) -> List[PaperSummary]:
+    def summarize_papers(self, papers: List[ScholarPaper]) -> List[PaperSummary]:
         """
         複数の論文を要約する
 
@@ -80,7 +69,7 @@ class PaperSummarizer:
 
     def summarize_papers_with_qiita_upload(
         self,
-        papers: List[ArxivPaper],
+        papers: List[ScholarPaper],
         private: bool = False,
     ) -> List[PaperSummary]:
         """
@@ -166,7 +155,7 @@ PDF Link: {paper.pdf_link}
 """
         return prompt
 
-    def _parse_summary_result(self, paper: ArxivPaper, summary_text: str) -> PaperSummary:
+    def _parse_summary_result(self, paper: ScholarPaper, summary_text: str) -> PaperSummary:
         """
         要約結果をパースしてPaperSummaryオブジェクトを作成
 
@@ -186,12 +175,11 @@ PDF Link: {paper.pdf_link}
         return PaperSummary(
             title=paper.title,
             authors=paper.authors,
-            arxiv_id=paper.arxiv_id,
             summary=sections.get("要約", summary_text),
             key_points=key_points,
             implications=sections.get("意義・影響", ""),
-            pdf_url=paper.pdf_url,
-            arxiv_url=paper.arxiv_url,
+            pdf_url=paper.pdf_link,
+            paper_link=paper.link,
         )
 
     def _extract_sections(self, text: str) -> Dict[str, str]:
@@ -267,7 +255,7 @@ PDF Link: {paper.pdf_link}
 ## 論文情報
 
 - **著者**: {', '.join(summary.authors)}
-- **arXiv ID**: [{summary.arxiv_id}]({summary.arxiv_url})
+- **論文URL**: [{summary.arxiv_id}]({summary.paper_link})
 - **PDF**: [Link]({summary.pdf_url})
 
 ## 要約
@@ -285,7 +273,7 @@ PDF Link: {paper.pdf_link}
 
 ## 参考リンク
 
-- [arXiv]({summary.arxiv_url})
+- [論文リンク]({summary.paper_link})
 - [PDF]({summary.pdf_url})
 
 """

@@ -206,3 +206,5 @@ __marimo__/
 dist
 node_modules
 tmp
+
+scholar_cache/

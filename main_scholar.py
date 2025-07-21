@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from pdf_summarizer import PDFSummarizer
+from paper_summarizer import PaperSummarizer
 from scholar_paper_fetcher import ScholarPaperFetcher
 
 
@@ -12,6 +12,7 @@ def main():
     parser.add_argument("--force", action="store_true", help="今日既に取得済みでも強制的に取得")
     parser.add_argument("--prefer-recent", action="store_true", help="最新論文を優先（デフォルトは高引用論文）")
     parser.add_argument("--max-papers", type=int, default=3, help="要約する論文の最大数")
+    parser.add_argument("--qiita-upload", action="store_true", help="Qiitaの記事を自動作成する")
 
     args = parser.parse_args()
 
@@ -42,75 +43,32 @@ def main():
 
     print(f"\nFound {len(papers_with_pdf)} papers with PDF links")
 
-    # PDFSummarizerを初期化 (temp_images_for_paperディレクトリを指定)
-    summarizer = PDFSummarizer(output_images_dir="temp_images_for_paper")
+    summarizer = PaperSummarizer(enable_qiita_upload=args.qiita_upload)
 
-    # 論文をPDF→画像変換して要約
-    summaries = []
-    for i, (paper, pdf_link) in enumerate(papers_with_pdf[: args.max_papers]):
-        print(f"\n=== Processing paper {i + 1}/{min(len(papers_with_pdf), args.max_papers)} ===")
-        print(f"Title: {paper.title}")
-        print(f"Authors: {', '.join(paper.authors[:3])}...")
-        print(f"Citations: {paper.citations}")
-        print(f"PDF: {pdf_link}")
+    if args.qiita_upload:
+        # Qiitaアップロード機能付きで実行
+        summaries = summarizer.summarize_papers_with_qiita_upload(papers_with_pdf, private=args.private)
+    else:
+        # 通常の要約のみ
+        summaries = summarizer.summarize_papers(papers)
 
-        # PDFを画像に変換
-        image_paths = summarizer.convert_pdf_to_images_only(paper, pdf_link)
+    print(f"要約完了: {len(summaries)}")
 
-        if image_paths:
-            print(f"\nPDF converted to {len(image_paths)} images in temp_images_for_paper/")
-
-            # 画像から要約を生成
-            print("Generating summary with Claude...")
-            summary = summarizer.summarize_paper_from_images(paper, image_paths)
-
-            if summary:
-                summaries.append(summary)
-                print("\nSummary generated successfully!")
-
-                # 要約後に画像ファイルを削除
-                print("Cleaning up image files...")
-                summarizer.cleanup_images(image_paths)
-            else:
-                print("\nFailed to generate summary")
-                # 失敗した場合も画像を削除
-                summarizer.cleanup_images(image_paths)
-
-        else:
-            print("\nFailed to convert PDF to images")
+    for summary in summaries:
+        print(summary)
+        print("\n")
 
     # 結果を表示
-    print(f"\n\n=== Summary Results ===")
-    print(f"Successfully summarized {len(summaries)} out of {min(len(papers_with_pdf), args.max_papers)} papers")
-
-    for i, summary in enumerate(summaries, 1):
-        print(f"\n{'='*60}")
-        print(f"Paper {i}: {summary.paper.title}")
-        print(f"{'='*60}")
-        print(f"\n## 要約")
-        print(summary.summary)
-
-        print(f"\n## 主要なポイント")
-        for j, point in enumerate(summary.key_points, 1):
-            print(f"{j}. {point}")
-
-        if summary.methodology:
-            print(f"\n## 手法・アプローチ")
-            print(summary.methodology)
-
-        if summary.results:
-            print(f"\n## 実験結果・成果")
-            print(summary.results)
-
-        print(f"\n## 意義・影響")
-        print(summary.implications)
-
-        print(f"\n論文リンク: {summary.paper.link}")
-        if summary.paper.pdf_link:
-            print(f"PDFリンク: {summary.paper.pdf_link}")
-
-    # 月次サマリーを表示
-    fetcher.print_summary()
+    # for summary in summaries:
+    #     print("\n" + "=" * 50)
+    #     print(f"タイトル: {summary.title}")
+    #     print(f"著者: {', '.join(summary.authors)}")
+    #     print(f"arXiv ID: {summary.arxiv_id}")
+    #     print(f"要約: {summary.summary}")
+    #     print("主要なポイント:")
+    #     for i, point in enumerate(summary.key_points, 1):
+    #         print(f"  {i}. {point}")
+    #     print(f"意義・影響: {summary.implications}")
 
 
 if __name__ == "__main__":

@@ -37,20 +37,28 @@ class EfficientScholarFetcher:
         # 最新論文重視の場合（初期化時に年を設定）
         current_year = datetime.now().year
         self.search_queries_recent = [
-            f'"deep learning" OR "neural network" {current_year}',
-            f'"transformer" OR "large language model" {current_year}',
-            f'site:arxiv.org "machine learning" {current_year}',
-            f'"computer vision" {current_year} filetype:pdf',
-            f'"generative AI" OR "foundation model" {current_year}',
+            # f'"deep learning" OR "neural network" {current_year}',
+            # f'"transformer" OR "large language model" {current_year}',
+            'site:arxiv.org "machine learning" OR "AI" OR "Artificial Intelligence"',
+            'site:arxiv.org "LLM" OR "Language Model" OR "generative AI" OR "foundation model"',
+            'site:arxiv.org "Natural Language Processing" OR "NLP"',
+            'site:arxiv.org "computer vision" OR "CL"',
+            'site:arxiv.org "reinforcement learning"',
+            # f'"computer vision" {current_year} filetype:pdf',
+            # f'"generative AI" OR "foundation model" {current_year}',
         ]
 
         # 高引用論文重視の場合（デフォルト）
         self.search_queries_quality = [
-            '"deep learning" OR "neural network" citations:100',  # 100引用以上
-            '"transformer" OR "large language model" citations:50',
-            '"computer vision" OR "natural language processing" citations:100',
-            '"reinforcement learning" OR "generative AI" citations:50',
-            'arxiv.org "machine learning" citations:100',  # arXiv限定
+            # '"deep learning" OR "neural network" citations:100',  # 100引用以上
+            # '"transformer" OR "large language model" citations:50',
+            # '"computer vision" OR "natural language processing" citations:100',
+            # '"reinforcement learning" OR "generative AI" citations:50',
+            'site:arxiv.org "machine learning" OR "AI" OR "Artificial Intelligence"',
+            'site:arxiv.org "LLM" OR "Language Model" OR "generative AI" OR "foundation model"',
+            'site:arxiv.org "Natural Language Processing" OR "NLP"',
+            'site:arxiv.org "computer vision" OR "CL"',
+            'site:arxiv.org "reinforcement learning"',
         ]
 
         # デフォルトは高引用論文を優先
@@ -59,15 +67,15 @@ class EfficientScholarFetcher:
         # 無料論文のドメイン（主要なもののみ）
         self.free_domains = [
             "arxiv.org",
-            "openreview.net",
-            "aclanthology.org",
-            "proceedings.neurips.cc",
-            "proceedings.mlr.press",
-            "openaccess.thecvf.com",
-            "plos.org",
-            "ncbi.nlm.nih.gov/pmc",
-            "biorxiv.org",
-            "medrxiv.org",
+            # "openreview.net",
+            # "aclanthology.org",
+            # "proceedings.neurips.cc",
+            # "proceedings.mlr.press",
+            # "openaccess.thecvf.com",
+            # "plos.org",
+            # "ncbi.nlm.nih.gov/pmc",
+            # "biorxiv.org",
+            # "medrxiv.org",
         ]
 
     def _load_history(self) -> Dict[str, Set[str]]:
@@ -125,7 +133,12 @@ class EfficientScholarFetcher:
             for resource in result.get("resources", []):
                 if "link" in resource:
                     link = resource["link"].lower()
-                    if link.endswith(".pdf") or any(domain in link for domain in self.free_domains):
+                    # file_format = resource["file_format"].lower()
+                    if (
+                        link.endswith(".pdf")
+                        or any(domain in link for domain in self.free_domains)
+                        # or file_format == "pdf"
+                    ):
                         return True
 
         # 論文リンクをチェック
@@ -202,11 +215,11 @@ class EfficientScholarFetcher:
 
         # 最新論文重視のクエリを現在の年で更新
         self.search_queries_recent = [
-            f'"deep learning" OR "neural network" {current_year}',
-            f'"transformer" OR "large language model" {current_year}',
-            f'site:arxiv.org "machine learning" {current_year}',
-            f'"computer vision" {current_year} filetype:pdf',
-            f'"generative AI" OR "foundation model" {current_year}',
+            # f'"deep learning" OR "neural network" {current_year}',
+            # f'"transformer" OR "large language model" {current_year}',
+            'site:arxiv.org "machine learning"',
+            # f'"computer vision" {current_year} filetype:pdf',
+            # f'"generative AI" OR "foundation model" {current_year}',
         ]
 
     def fetch_daily_papers(self, force: bool = False, prefer_recent: bool = False) -> List[Dict]:
@@ -262,11 +275,12 @@ class EfficientScholarFetcher:
             "as_ylo": year_range[0],
             "as_yhi": year_range[1],
             "hl": "en",
+            "scisbd": 0,
         }
 
-        # 最新論文優先の場合は日付順ソート
-        if prefer_recent:
-            params["scisbd"] = 0  # 日付順ソート
+        # # 最新論文優先の場合は日付順ソート
+        # if prefer_recent:
+        #     params["scisbd"] = 0
 
         logger.info(f"Searching with query: {query} (Strategy: {'recent' if prefer_recent else 'quality'})")
         try:
@@ -283,6 +297,7 @@ class EfficientScholarFetcher:
 
             # 無料論文をフィルタリング
             free_papers = []
+
             for result in results["organic_results"]:
                 if self._is_free_paper(result):
                     citations = self._extract_citations(result)

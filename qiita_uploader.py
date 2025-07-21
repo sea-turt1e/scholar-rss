@@ -39,7 +39,7 @@ class QiitaUploader:
 
             # ファイル名を生成（安全な文字のみ使用）
             safe_title = self._create_safe_filename(summary.title)
-            filename = f"{safe_title}_{summary.arxiv_id}.md"
+            filename = f"{safe_title}.md"
             file_path = self.public_dir / filename
 
             # ファイルに保存
@@ -50,7 +50,7 @@ class QiitaUploader:
             return True
 
         except Exception as e:
-            print(f"Error creating article file for {summary.arxiv_id}: {e}")
+            print(f"Error creating article file for {summary.title}: {e}")
             return False
 
     def create_articles(self, summaries: List[PaperSummary], private: bool = False) -> int:
@@ -71,9 +71,9 @@ class QiitaUploader:
             success = self.create_article(summary, private)
             if success:
                 success_count += 1
-                print(f"✓ Successfully created article file for {summary.arxiv_id}")
+                print(f"✓ Successfully created article file for {summary.title}")
             else:
-                print(f"✗ Failed to create article file for {summary.arxiv_id}")
+                print(f"✗ Failed to create article file for {summary.title}")
 
         return success_count
 
@@ -157,8 +157,8 @@ ignorePublish: false
 ## 論文情報
 
 - **著者**: {', '.join(summary.authors)}
-- **arXiv ID**: [{summary.arxiv_id}]({summary.arxiv_url})
-- **PDF**: [Link]({summary.pdf_url})
+- **論文概要リンク**: {summary.paper_link}
+- **論文PDFリンク**: {summary.pdf_url}
 
 ## 要約
 
@@ -172,6 +172,11 @@ ignorePublish: false
             content += f"{i}. {point}\n"
 
         content += f"""
+
+## メソッド
+
+{summary.methodology}
+
 ## 意義・影響
 
 {summary.implications}
@@ -215,14 +220,8 @@ ignorePublish: false
         try:
             # git pushする
             cmd = f"{self.git_push_cmd} '{filename}'.md"
-            result = subprocess.run(
-                cmd, 
-                capture_output=True, 
-                text=True, 
-                shell=True,
-                cwd=self.public_dir.parent
-            )
-            
+            result = subprocess.run(cmd, capture_output=True, text=True, shell=True, cwd=self.public_dir.parent)
+
             if result.returncode == 0:
                 print(f"✓ Successfully pushed '{filename}' to GitHub")
                 if result.stdout:
@@ -257,28 +256,28 @@ ignorePublish: false
         """
         existing_ids = []
         article_files = self.list_articles()
-        
+
         for filename in article_files:
             # ファイル名からarXiv IDを抽出
             # 例: "VideoITG_Multimodal_Video_Understanding_with_Instr_2507.13353v1.md"
-            parts = filename.replace('.md', '').split('_')
+            parts = filename.replace(".md", "").split("_")
             if len(parts) > 0:
                 # 最後の部分がarXiv IDの可能性が高い
                 potential_id = parts[-1]
                 # arXiv IDのパターンをチェック (YYMM.NNNNN形式)
-                if '.' in potential_id and len(potential_id.split('.')) == 2:
+                if "." in potential_id and len(potential_id.split(".")) == 2:
                     try:
-                        year_month, paper_num = potential_id.split('.')
+                        year_month, paper_num = potential_id.split(".")
                         # バージョン番号がある場合は除去
-                        if 'v' in paper_num:
-                            paper_num = paper_num.split('v')[0]
+                        if "v" in paper_num:
+                            paper_num = paper_num.split("v")[0]
                         # 数字かどうかチェック
                         int(year_month)
                         int(paper_num)
                         existing_ids.append(f"{year_month}.{paper_num}")
                     except ValueError:
                         continue
-        
+
         return existing_ids
 
     def is_paper_already_processed(self, arxiv_id: str) -> bool:
@@ -293,7 +292,7 @@ ignorePublish: false
         """
         existing_ids = self.get_existing_arxiv_ids()
         # バージョン番号を除去してチェック
-        clean_id = arxiv_id.split('v')[0]
+        clean_id = arxiv_id.split("v")[0]
         return clean_id in existing_ids
 
 

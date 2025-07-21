@@ -85,15 +85,15 @@ class PaperSummarizer:
         summaries = []
 
         for paper in papers:
-            import ipdb
-
-            ipdb.set_trace()
             print(f"Summarizing: {paper.title}")
             summary = self.summarize_paper(paper)
             if summary:
                 summaries.append(summary)
 
         # Qiitaアップロードが有効な場合のみ実行
+        import ipdb
+
+        ipdb.set_trace()
         if self.enable_qiita_upload and summaries:
             try:
                 from qiita_uploader import QiitaUploader
@@ -155,6 +155,7 @@ PDF Link: {paper.pdf_link}
 # ルール
 - 回答は上記の形式に従って、技術的な内容も含めて分かりやすく日本語で説明してください。
 - マークダウン形式で書いてください。
+- この生成での出力をそのまま要約としてアップロードします。それゆえ最初や最後にAIと判断されるような出力はしないでください。
 """
         return prompt
 

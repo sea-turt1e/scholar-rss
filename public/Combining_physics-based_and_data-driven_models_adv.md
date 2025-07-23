@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 Combining physics-based and data-driven models: advancing the frontiers of research with scientific machine learning"
+title: >-
+  【論文要約】 Combining physics-based and data-driven models: advancing the frontiers
+  of research with scientific machine learning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-23T12:28:58+09:00'
+id: 086d993e9982cecd9fc0
 organization_url_name: null
 slide: false
 ignorePublish: false

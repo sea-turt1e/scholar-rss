@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 Quantum machine learning: A hands-on tutorial for machine learning practitioners and researchers"
+title: >-
+  【論文要約】 Quantum machine learning: A hands-on tutorial for machine learning
+  practitioners and researchers
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-24T12:03:53+09:00'
+id: 4c50a4deb258f670ce67
 organization_url_name: null
 slide: false
 ignorePublish: false

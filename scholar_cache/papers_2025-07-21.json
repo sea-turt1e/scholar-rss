@@ -1,50 +1,15 @@
 [
   {
-    "id": "3f032ef7c6c55ec49027080ee6c8369c",
-    "title": "Overview of the TREC 2022 deep learning track",
+    "id": "dbe5763888c764ce5064b54a6a8db895",
+    "title": "Crop yield time-series data prediction based on multiple hybrid machine learning models",
     "authors": [
-      "N Craswell",
-      "B Mitra",
-      "E Yilmaz",
-      "D Campos",
-      "J Lin"
+      "X Mo"
     ],
     "year": 2025,
-    "citations": 761,
-    "link": "https://arxiv.org/abs/2507.10865",
-    "pdf_link": "https://arxiv.org/pdf/2507.10865",
-    "snippet": "This is the fourth year of the TREC Deep Learning track. As in previous years, we leverage the MS MARCO datasets that made hundreds of thousands of human annotated training …",
-    "fetched_date": "2025-07-21"
-  },
-  {
-    "id": "660695aebc57bce4780a83626c5ab47f",
-    "title": "Advances in Deep Learning, Volume 2",
-    "authors": [
-      "MA Wani",
-      "MA Sofi",
-      "B Sultan"
-    ],
-    "year": 2025,
-    "citations": 310,
-    "link": "https://link.springer.com/content/pdf/10.1007/978-981-96-3498-9.pdf",
-    "pdf_link": "https://www.kaggle.com/blobs/download/forum-message-attachment-files/16287/Advances%20in%20Deep%20Learning%20(2020).pdf",
-    "snippet": "… Several areas and applications of deep learning have witnessed … of deep learning models by automating the process of architecture creation. Traditionally, designing deep learning …",
-    "fetched_date": "2025-07-21"
-  },
-  {
-    "id": "dd0a7c2a1303f71c39131ee78e615c1a",
-    "title": "Kolmogorov–Arnold-Informed neural network: A physics-informed deep learning framework for solving forward and inverse problems based on Kolmogorov–Arnold …",
-    "authors": [
-      "Y Wang",
-      "J Bai",
-      "C Anitescu",
-      "MS Eshaghi"
-    ],
-    "year": 2025,
-    "citations": 104,
-    "link": "https://www.sciencedirect.com/science/article/pii/S0045782524007722",
-    "pdf_link": "https://arxiv.org/pdf/2406.11045?",
-    "snippet": "AI for partial differential equations (PDEs) has garnered significant attention, particularly with the emergence of Physics-informed neural networks (PINNs). The recent advent of …",
+    "citations": 29,
+    "link": "https://arxiv.org/abs/2502.10405",
+    "pdf_link": "https://arxiv.org/pdf/2502.10405",
+    "snippet": "… This study utilizes relevant datasets and integrates multiple machine learning algorithms, including Linear Regression, Random Forest, Gradient Boost, XGBoost, K-Nearest Neighbors (…",
     "fetched_date": "2025-07-21"
   }
 ]

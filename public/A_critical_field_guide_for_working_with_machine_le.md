@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 A critical field guide for working with machine learning datasets"
+title: 【論文要約】 A critical field guide for working with machine learning datasets
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-26T07:16:57+09:00'
+id: 93d25a2b849a39d8bb41
 organization_url_name: null
 slide: false
 ignorePublish: false

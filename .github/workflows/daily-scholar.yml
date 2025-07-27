@@ -1,0 +1,54 @@
+name: Daily Scholar Papers Fetch
+
+on:
+  schedule:
+    # 毎日6:00 JST (UTC 21:00前日) に実行
+    - cron: '0 21 * * *'
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-summarize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+          
+      - name: Install dependencies
+        run: |
+          uv sync
+          
+      - name: Run scholar paper fetcher
+        env:
+          SERP_API_KEY: ${{ secrets.SERP_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          uv run python main_scholar.py --max-papers 1 --qiita-upload
+          
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-fetch and summarize papers $(date -u +%Y-%m-%d)"
+            git push
+          fi

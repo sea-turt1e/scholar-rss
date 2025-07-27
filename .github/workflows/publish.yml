@@ -2,6 +2,9 @@
 name: Publish articles
 
 on:
+  schedule:
+    # 毎日6:30 JST (UTC 21:30前日) に実行
+    - cron: '30 21 * * *'
   push:
     branches:
       - main

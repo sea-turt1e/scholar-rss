@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 A survey on llm-as-a-judge"
+title: 【論文要約】 A survey on llm-as-a-judge
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-28T06:49:30+09:00'
+id: e885ce9709ae707bb02e
 organization_url_name: null
 slide: false
 ignorePublish: false

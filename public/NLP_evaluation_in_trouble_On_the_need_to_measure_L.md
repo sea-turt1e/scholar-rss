@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 NLP evaluation in trouble: On the need to measure LLM data contamination for each benchmark"
+title: >-
+  【論文要約】 NLP evaluation in trouble: On the need to measure LLM data
+  contamination for each benchmark
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-29T06:35:03+09:00'
+id: f98fe8420139e764c2c5
 organization_url_name: null
 slide: false
 ignorePublish: false

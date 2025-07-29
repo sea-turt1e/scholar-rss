@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 Tutorial on using machine learning and deep learning models for mental illness detection"
+title: >-
+  【論文要約】 Tutorial on using machine learning and deep learning models for mental
+  illness detection
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-30T06:35:52+09:00'
+id: 7a6f975d1abf525d6020
 organization_url_name: null
 slide: false
 ignorePublish: false

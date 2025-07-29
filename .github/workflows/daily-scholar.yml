@@ -39,7 +39,7 @@ jobs:
           SERP_API_KEY: ${{ secrets.SERP_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          uv run python main_scholar.py --max-papers 1 --qiita-upload
+          uv run python main_scholar.py --max-papers 1 --qiita-upload --prefer-recent
           
       - name: Commit and push changes
         run: |

@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 REX: Causal Discovery based on Machine Learning and Explainability techniques"
+title: >-
+  【論文要約】 REX: Causal Discovery based on Machine Learning and Explainability
+  techniques
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-31T06:35:53+09:00'
+id: ee6f1c14a6fd949a92f6
 organization_url_name: null
 slide: false
 ignorePublish: false

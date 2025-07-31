@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 Stonefish: Supporting machine learning research in marine robotics"
+title: '【論文要約】 Stonefish: Supporting machine learning research in marine robotics'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-01T06:35:43+09:00'
+id: 4118d51e8f7bf9cbb4da
 organization_url_name: null
 slide: false
 ignorePublish: false

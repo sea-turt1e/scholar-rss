@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 An introduction to double/debiased machine learning"
+title: 【論文要約】 An introduction to double/debiased machine learning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-02T06:35:34+09:00'
+id: ea05d1dbe46462b5c654
 organization_url_name: null
 slide: false
 ignorePublish: false

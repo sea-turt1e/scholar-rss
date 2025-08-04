@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 Machine learning applications in archaeological practices: a review"
+title: '【論文要約】 Machine learning applications in archaeological practices: a review'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-05T06:36:15+09:00'
+id: a31f025870dd5a0ee7cf
 organization_url_name: null
 slide: false
 ignorePublish: false

@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 Verde: Verification via refereed delegation for machine learning programs"
+title: >-
+  【論文要約】 Verde: Verification via refereed delegation for machine learning
+  programs
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-07T06:35:03+09:00'
+id: 9eea85ade7869606fbf9
 organization_url_name: null
 slide: false
 ignorePublish: false

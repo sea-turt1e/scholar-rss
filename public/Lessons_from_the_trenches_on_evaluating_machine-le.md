@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 Lessons from the trenches on evaluating machine-learning systems in materials science"
+title: >-
+  【論文要約】 Lessons from the trenches on evaluating machine-learning systems in
+  materials science
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-08T06:35:25+09:00'
+id: c1c96228f14c3ca38c62
 organization_url_name: null
 slide: false
 ignorePublish: false

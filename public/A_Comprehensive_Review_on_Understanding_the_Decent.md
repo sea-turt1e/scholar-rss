@@ -1,14 +1,16 @@
 ---
-title: "【論文要約】 A Comprehensive Review on Understanding the Decentralized and Collaborative Approach in Machine Learning"
+title: >-
+  【論文要約】 A Comprehensive Review on Understanding the Decentralized and
+  Collaborative Approach in Machine Learning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-10T06:34:10+09:00'
+id: 4d4a4a5f014fec011e1b
 organization_url_name: null
 slide: false
 ignorePublish: false

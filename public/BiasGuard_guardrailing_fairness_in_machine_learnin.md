@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 BiasGuard: guardrailing fairness in machine learning production systems"
+title: '【論文要約】 BiasGuard: guardrailing fairness in machine learning production systems'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-11T06:34:13+09:00'
+id: 9504421468ab8fd2fc26
 organization_url_name: null
 slide: false
 ignorePublish: false

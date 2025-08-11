@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 The Curious Case of Arbitrariness in Machine Learning"
+title: 【論文要約】 The Curious Case of Arbitrariness in Machine Learning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-12T06:33:42+09:00'
+id: b0bc826f19409bdf4b2b
 organization_url_name: null
 slide: false
 ignorePublish: false

@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 A Perspective on Symbolic Machine Learning in Physical Sciences"
+title: 【論文要約】 A Perspective on Symbolic Machine Learning in Physical Sciences
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-13T06:34:47+09:00'
+id: e121e5713aafb1278a68
 organization_url_name: null
 slide: false
 ignorePublish: false

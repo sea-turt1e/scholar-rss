@@ -33,32 +33,38 @@ class EfficientScholarFetcher:
         self.fetched_papers = self._load_history()
         self.api_usage = self._load_api_usage()
 
-        # AI関連の効率的な検索クエリ
+        # AI関連の効率的な検索クエリ（改善版）
         # 最新論文重視の場合（初期化時に年を設定）
         current_year = datetime.now().year
         self.search_queries_recent = [
-            # f'"deep learning" OR "neural network" {current_year}',
-            # f'"transformer" OR "large language model" {current_year}',
-            'site:arxiv.org "machine learning" OR "AI" OR "Artificial Intelligence"',
-            'site:arxiv.org "LLM" OR "Language Model" OR "generative AI" OR "foundation model"',
-            'site:arxiv.org "Natural Language Processing" OR "NLP"',
-            'site:arxiv.org "computer vision" OR "CL"',
-            'site:arxiv.org "reinforcement learning"',
-            # f'"computer vision" {current_year} filetype:pdf',
-            # f'"generative AI" OR "foundation model" {current_year}',
+            # arXivのカテゴリベースの検索（より包括的）
+            "site:arxiv.org (cat:cs.LG OR cat:cs.AI OR cat:cs.CL OR cat:cs.CV OR cat:cs.NE)",
+            # # 機械学習関連の幅広いキーワード
+            # 'site:arxiv.org ("deep learning" OR "neural network" OR "machine learning" OR "artificial intelligence")',
+            # # 特定手法・モデル
+            # 'site:arxiv.org ("transformer" OR "attention" OR "CNN" OR "RNN" OR "LSTM" OR "GAN")',
+            # # 自然言語処理・コンピュータビジョン
+            # 'site:arxiv.org ("NLP" OR "computer vision" OR "image recognition" OR "text classification")',
+            # # 最新のAI手法
+            # 'site:arxiv.org ("LLM" OR "large language model" OR "foundation model" OR "generative AI")',
+            # # 強化学習・その他
+            # 'site:arxiv.org ("reinforcement learning" OR "supervised learning" OR "unsupervised learning")',
         ]
 
         # 高引用論文重視の場合（デフォルト）
         self.search_queries_quality = [
-            # '"deep learning" OR "neural network" citations:100',  # 100引用以上
-            # '"transformer" OR "large language model" citations:50',
-            # '"computer vision" OR "natural language processing" citations:100',
-            # '"reinforcement learning" OR "generative AI" citations:50',
-            'site:arxiv.org "machine learning" OR "AI" OR "Artificial Intelligence"',
-            'site:arxiv.org "LLM" OR "Language Model" OR "generative AI" OR "foundation model"',
-            'site:arxiv.org "Natural Language Processing" OR "NLP"',
-            'site:arxiv.org "computer vision" OR "CL"',
-            'site:arxiv.org "reinforcement learning"',
+            # arXivカテゴリベース（最も効果的）
+            "site:arxiv.org (cat:cs.LG OR cat:cs.AI OR cat:cs.CL OR cat:cs.CV)",
+            # 機械学習の基本概念
+            # 'site:arxiv.org ("machine learning" OR "deep learning" OR "neural network")',
+            # # 自然言語処理
+            # 'site:arxiv.org ("natural language processing" OR "NLP" OR "language model")',
+            # # コンピュータビジョン
+            # 'site:arxiv.org ("computer vision" OR "image processing" OR "object detection")',
+            # # 最新AI技術
+            # 'site:arxiv.org ("transformer" OR "attention mechanism" OR "generative AI")',
+            # # データサイエンス・統計学習
+            # 'site:arxiv.org ("data mining" OR "statistical learning" OR "pattern recognition")',
         ]
 
         # デフォルトは高引用論文を優先
@@ -77,6 +83,118 @@ class EfficientScholarFetcher:
             # "biorxiv.org",
             # "medrxiv.org",
         ]
+
+    def fetch_papers_by_arxiv_categories(self, categories: List[str] = None, max_papers: int = 1) -> List[Dict]:
+        """
+        arXivのカテゴリベースで論文を取得（より確実にML関連論文を取得）
+
+        Args:
+            categories: 対象カテゴリのリスト
+            max_papers: 取得する論文の最大数
+
+        Returns:
+            取得した論文のリスト
+        """
+        if categories is None:
+            categories = [
+                "cs.LG",  # Machine Learning
+                "cs.AI",  # Artificial Intelligence
+                "cs.CL",  # Computation and Language
+                "cs.CV",  # Computer Vision
+                "cs.NE",  # Neural and Evolutionary Computing
+                "stat.ML",  # Statistics - Machine Learning
+            ]
+
+        # カテゴリベースのクエリを構築
+        category_query = " OR ".join([f"cat:{cat}" for cat in categories])
+        query = f"site:arxiv.org ({category_query})"
+
+        return self._search_with_query(query, max_papers)
+
+    def _search_with_query(self, query: str, max_papers: int) -> List[Dict]:
+        """
+        指定されたクエリで検索を実行
+
+        Args:
+            query: 検索クエリ
+            max_papers: 取得する論文の最大数
+
+        Returns:
+            取得した論文のリスト
+        """
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        # API制限チェック
+        can_use, remaining = self._check_api_limit()
+        if not can_use:
+            logger.error("Monthly API limit reached (100 calls)")
+            return []
+
+        current_year = datetime.now().year
+        year_range = (current_year - 1, current_year)  # 過去1年
+
+        params = {
+            "engine": "google_scholar",
+            "q": query,
+            "api_key": self.api_key,
+            "num": 20,
+            "as_ylo": year_range[0],
+            "as_yhi": year_range[1],
+            "hl": "en",
+            "scisbd": 0,
+        }
+
+        logger.info(f"Searching with category-based query: {query}")
+
+        try:
+            search = GoogleSearch(params)
+            results = search.get_dict()
+            self._increment_api_usage()
+
+            if "organic_results" not in results:
+                logger.warning("No organic results found")
+                return []
+
+            # 論文を処理
+            papers = []
+            for result in results["organic_results"]:
+                if self._is_free_paper(result):
+                    citations = self._extract_citations(result)
+                    if citations >= 1:  # 最低1引用
+                        paper_info = {
+                            "id": self._get_paper_id(result),
+                            "title": result.get("title", ""),
+                            "authors": self._extract_authors(result),
+                            "year": self._extract_year(result),
+                            "citations": citations,
+                            "link": result.get("link", ""),
+                            "pdf_link": self._extract_pdf_link(result),
+                            "snippet": result.get("snippet", ""),
+                            "fetched_date": today,
+                        }
+                        papers.append(paper_info)
+
+            # 引用数でソート
+            papers.sort(key=lambda x: x["citations"], reverse=True)
+
+            # 重複除去
+            all_fetched_ids = set()
+            for date_papers in self.fetched_papers.values():
+                all_fetched_ids.update(date_papers)
+
+            new_papers = []
+            for paper in papers:
+                if paper["id"] not in all_fetched_ids:
+                    new_papers.append(paper)
+                    if len(new_papers) >= max_papers:
+                        break
+
+            logger.info(f"Found {len(new_papers)} new ML papers")
+            return new_papers
+
+        except Exception as e:
+            logger.error(f"Error in category-based search: {e}")
+            return []
 
     def _load_history(self) -> Dict[str, Set[str]]:
         """取得済み論文の履歴を読み込み"""
@@ -213,22 +331,23 @@ class EfficientScholarFetcher:
         """現在の年に合わせて検索クエリを更新"""
         current_year = datetime.now().year
 
-        # 最新論文重視のクエリを現在の年で更新
+        # 最新論文重視のクエリを現在の年で更新（より包括的）
         self.search_queries_recent = [
-            # f'"deep learning" OR "neural network" {current_year}',
-            # f'"transformer" OR "large language model" {current_year}',
-            'site:arxiv.org "machine learning"',
-            # f'"computer vision" {current_year} filetype:pdf',
-            # f'"generative AI" OR "foundation model" {current_year}',
+            f"site:arxiv.org (cat:cs.LG OR cat:cs.AI OR cat:cs.CL OR cat:cs.CV) year:{current_year}",
+            f'site:arxiv.org ("machine learning" OR "deep learning") year:{current_year}',
+            f'site:arxiv.org ("transformer" OR "attention") year:{current_year}',
+            f'site:arxiv.org ("LLM" OR "large language model") year:{current_year}',
+            f'site:arxiv.org "generative AI" year:{current_year}',
         ]
 
     def fetch_daily_papers(self, force: bool = False, prefer_recent: bool = False, max_papers: int = 1) -> List[Dict]:
         """
-        1日3件の高引用論文を取得（コスパ重視）
+        1日の論文を取得（Machine Learning関連を包括的に）
 
         Args:
             force: 今日既に取得済みでも強制的に取得するか
             prefer_recent: 最新論文を優先するか（デフォルトは高引用論文優先）
+            max_papers: 取得する論文の最大数
 
         Returns:
             取得した論文のリスト
@@ -247,6 +366,35 @@ class EfficientScholarFetcher:
             return []
 
         logger.info(f"API calls remaining this month: {remaining}")
+
+        # まずカテゴリベースで確実にML論文を取得
+        category_papers = self.fetch_papers_by_arxiv_categories(max_papers=max_papers)
+
+        if category_papers:
+            # 履歴に追加
+            self.fetched_papers[today] = {p["id"] for p in category_papers}
+            self._save_history()
+            self._save_daily_papers(today, category_papers)
+            logger.info(f"Successfully fetched {len(category_papers)} papers via category search")
+            return category_papers
+
+        # カテゴリベースで取得できなかった場合は元のロジックにフォールバック
+        logger.info("Falling back to keyword-based search")
+        keyword_papers = self._fetch_papers_keyword_based(force, prefer_recent, max_papers)
+
+        # 履歴に追加
+        if keyword_papers:
+            self.fetched_papers[today] = {p["id"] for p in keyword_papers}
+            self._save_history()
+            self._save_daily_papers(today, keyword_papers)
+
+        return keyword_papers
+
+    def _fetch_papers_keyword_based(self, force: bool, prefer_recent: bool, max_papers: int) -> List[Dict]:
+        """
+        元のキーワードベースの検索ロジック
+        """
+        today = datetime.now().strftime("%Y-%m-%d")
 
         # 検索戦略を選択
         if prefer_recent:
@@ -277,10 +425,6 @@ class EfficientScholarFetcher:
             "hl": "en",
             "scisbd": 0,
         }
-
-        # # 最新論文優先の場合は日付順ソート
-        # if prefer_recent:
-        #     params["scisbd"] = 0
 
         logger.info(f"Searching with query: {query} (Strategy: {'recent' if prefer_recent else 'quality'})")
         try:
@@ -319,7 +463,7 @@ class EfficientScholarFetcher:
 
             # 被引用数で降順ソート
             free_papers.sort(key=lambda x: x["citations"], reverse=True)
-            logger.info(f"Found {len(free_papers)} free papers with 10+ citations")
+            logger.info(f"Found {len(free_papers)} free papers with {min_citations}+ citations")
 
             # 過去に取得していない論文のみを選択
             all_fetched_ids = set()
@@ -330,18 +474,10 @@ class EfficientScholarFetcher:
             for paper in free_papers:
                 if paper["id"] not in all_fetched_ids:
                     new_papers.append(paper)
-                    if len(new_papers) >= max_papers:  # 1日3件まで
+                    if len(new_papers) >= max_papers:
                         break
 
             logger.info(f"Selected {len(new_papers)} new papers for today")
-
-            # 履歴に追加
-            if new_papers:
-                self.fetched_papers[today] = {p["id"] for p in new_papers}
-                self._save_history()
-
-                # 結果を保存
-                self._save_daily_papers(today, new_papers)
 
             return new_papers
 

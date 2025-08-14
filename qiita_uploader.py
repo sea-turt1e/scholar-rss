@@ -145,7 +145,6 @@ tags:
   - "AI"
   - "論文"
   - "arXiv"
-  - "Python"
 private: {str(private).lower()}
 updated_at: ""
 id: null

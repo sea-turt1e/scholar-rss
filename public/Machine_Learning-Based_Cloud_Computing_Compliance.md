@@ -1,14 +1,14 @@
 ---
-title: "【論文要約】 Machine Learning-Based Cloud Computing Compliance Process Automation"
+title: 【論文要約】 Machine Learning-Based Cloud Computing Compliance Process Automation
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
-  - "Python"
+  - Python
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-07-22T12:54:22+09:00'
+id: da7c17942cccc38ad835
 organization_url_name: null
 slide: false
 ignorePublish: false

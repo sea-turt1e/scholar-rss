@@ -139,7 +139,7 @@ class QiitaUploader:
         """
         # フロントマター部分
         content = f"""---
-title: "[arXiv] {summary.title}"
+title: "【論文要約】 {summary.title}"
 tags:
   - "機械学習"
   - "AI"

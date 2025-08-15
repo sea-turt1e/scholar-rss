@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Phi-4-reasoning technical report"
+title: 【論文要約】 Phi-4-reasoning technical report
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-16T06:33:32+09:00'
+id: 1fb569e741a0d3c8b11b
 organization_url_name: null
 slide: false
 ignorePublish: false

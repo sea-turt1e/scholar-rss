@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 ODverse33: Is the New YOLO Version Always Better? A Multi Domain benchmark from YOLO v5 to v11"
+title: >-
+  【論文要約】 ODverse33: Is the New YOLO Version Always Better? A Multi Domain
+  benchmark from YOLO v5 to v11
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-18T06:33:57+09:00'
+id: 759687acc6c68fd632ca
 organization_url_name: null
 slide: false
 ignorePublish: false

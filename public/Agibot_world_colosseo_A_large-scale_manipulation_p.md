@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Agibot world colosseo: A large-scale manipulation platform for scalable and intelligent embodied systems"
+title: >-
+  【論文要約】 Agibot world colosseo: A large-scale manipulation platform for scalable
+  and intelligent embodied systems
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-19T06:33:29+09:00'
+id: 25cbf4d29919a157ca48
 organization_url_name: null
 slide: false
 ignorePublish: false

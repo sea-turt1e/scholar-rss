@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Digital twins in tourism: a systematic literature review"
+title: '【論文要約】 Digital twins in tourism: a systematic literature review'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-21T06:34:02+09:00'
+id: e8aeda0a08411c3897e7
 organization_url_name: null
 slide: false
 ignorePublish: false

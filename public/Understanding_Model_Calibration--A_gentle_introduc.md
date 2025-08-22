@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Understanding Model Calibration--A gentle introduction and visual exploration of calibration and the expected calibration error (ECE)"
+title: >-
+  【論文要約】 Understanding Model Calibration--A gentle introduction and visual
+  exploration of calibration and the expected calibration error (ECE)
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-23T06:33:01+09:00'
+id: ed638ae4d027f4b7a4ef
 organization_url_name: null
 slide: false
 ignorePublish: false

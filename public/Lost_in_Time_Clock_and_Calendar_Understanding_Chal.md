@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Lost in Time: Clock and Calendar Understanding Challenges in Multimodal LLMs"
+title: >-
+  【論文要約】 Lost in Time: Clock and Calendar Understanding Challenges in Multimodal
+  LLMs
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-24T06:32:50+09:00'
+id: 83e24b17ef47d131d570
 organization_url_name: null
 slide: false
 ignorePublish: false

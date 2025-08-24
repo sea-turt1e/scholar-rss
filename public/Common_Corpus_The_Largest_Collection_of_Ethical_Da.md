@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Common Corpus: The Largest Collection of Ethical Data for LLM Pre-Training"
+title: >-
+  【論文要約】 Common Corpus: The Largest Collection of Ethical Data for LLM
+  Pre-Training
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-25T06:32:47+09:00'
+id: ff0b1787f60033880cd2
 organization_url_name: null
 slide: false
 ignorePublish: false

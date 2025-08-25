@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Exploring the Societal and Economic Impacts of Artificial Intelligence: A Scenario Generation Methodology"
+title: >-
+  【論文要約】 Exploring the Societal and Economic Impacts of Artificial Intelligence:
+  A Scenario Generation Methodology
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-26T06:33:27+09:00'
+id: ff4d47f79933bf6104b3
 organization_url_name: null
 slide: false
 ignorePublish: false

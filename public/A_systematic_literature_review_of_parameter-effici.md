@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 A systematic literature review of parameter-efficient fine-tuning for large code models"
+title: >-
+  【論文要約】 A systematic literature review of parameter-efficient fine-tuning for
+  large code models
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-28T06:32:53+09:00'
+id: 4e67a038d5c524357521
 organization_url_name: null
 slide: false
 ignorePublish: false

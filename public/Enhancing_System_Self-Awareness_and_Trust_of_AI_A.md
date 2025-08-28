@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Enhancing System Self-Awareness and Trust of AI: A Case Study in Trajectory Prediction and Planning"
+title: >-
+  【論文要約】 Enhancing System Self-Awareness and Trust of AI: A Case Study in
+  Trajectory Prediction and Planning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-29T06:32:48+09:00'
+id: e87e3533e4470715986f
 organization_url_name: null
 slide: false
 ignorePublish: false

@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Beyond Next Word Prediction: Developing Comprehensive Evaluation Frameworks for measuring LLM performance on real world applications"
+title: >-
+  【論文要約】 Beyond Next Word Prediction: Developing Comprehensive Evaluation
+  Frameworks for measuring LLM performance on real world applications
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-30T06:32:33+09:00'
+id: 32e34af0c58fd40fe00c
 organization_url_name: null
 slide: false
 ignorePublish: false

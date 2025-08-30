@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 KramaBench: A Benchmark for AI Systems on Data-to-Insight Pipelines over Data Lakes"
+title: >-
+  【論文要約】 KramaBench: A Benchmark for AI Systems on Data-to-Insight Pipelines
+  over Data Lakes
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-08-31T06:32:29+09:00'
+id: c3a913bb73891e825309
 organization_url_name: null
 slide: false
 ignorePublish: false

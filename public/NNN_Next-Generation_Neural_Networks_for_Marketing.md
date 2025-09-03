@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 NNN: Next-Generation Neural Networks for Marketing Mix Modeling"
+title: '【論文要約】 NNN: Next-Generation Neural Networks for Marketing Mix Modeling'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-04T06:32:39+09:00'
+id: 9a59c7f54cafcac0a8a2
 organization_url_name: null
 slide: false
 ignorePublish: false

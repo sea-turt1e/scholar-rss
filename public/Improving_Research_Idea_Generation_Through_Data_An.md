@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Improving Research Idea Generation Through Data: An Empirical Investigation in Social Science"
+title: >-
+  【論文要約】 Improving Research Idea Generation Through Data: An Empirical
+  Investigation in Social Science
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-05T06:32:58+09:00'
+id: 5f3f387d4e11ff54b4da
 organization_url_name: null
 slide: false
 ignorePublish: false

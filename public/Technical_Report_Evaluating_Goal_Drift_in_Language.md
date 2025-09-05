@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Technical Report: Evaluating Goal Drift in Language Model Agents"
+title: '【論文要約】 Technical Report: Evaluating Goal Drift in Language Model Agents'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-06T06:32:39+09:00'
+id: 57d93ef201da9450976a
 organization_url_name: null
 slide: false
 ignorePublish: false

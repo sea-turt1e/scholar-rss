@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 A survey of multimodal ophthalmic diagnostics: From task-specific approaches to foundational models"
+title: >-
+  【論文要約】 A survey of multimodal ophthalmic diagnostics: From task-specific
+  approaches to foundational models
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-08T06:32:50+09:00'
+id: 3be42ddec0010f1b2e4f
 organization_url_name: null
 slide: false
 ignorePublish: false

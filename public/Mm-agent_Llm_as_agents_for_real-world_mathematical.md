@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Mm-agent: Llm as agents for real-world mathematical modeling problem"
+title: '【論文要約】 Mm-agent: Llm as agents for real-world mathematical modeling problem'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-10T06:32:44+09:00'
+id: df8a33b93b8f9a3e406d
 organization_url_name: null
 slide: false
 ignorePublish: false

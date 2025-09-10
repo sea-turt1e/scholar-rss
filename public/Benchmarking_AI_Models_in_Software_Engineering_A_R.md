@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Benchmarking AI Models in Software Engineering: A Review, Search Tool, and Enhancement Protocol"
+title: >-
+  【論文要約】 Benchmarking AI Models in Software Engineering: A Review, Search Tool,
+  and Enhancement Protocol
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-11T06:32:51+09:00'
+id: 3e0537b7f926445e7b0a
 organization_url_name: null
 slide: false
 ignorePublish: false

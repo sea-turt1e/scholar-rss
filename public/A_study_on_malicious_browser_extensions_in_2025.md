@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 A study on malicious browser extensions in 2025"
+title: 【論文要約】 A study on malicious browser extensions in 2025
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-13T06:32:39+09:00'
+id: 4e289065a30f44689382
 organization_url_name: null
 slide: false
 ignorePublish: false

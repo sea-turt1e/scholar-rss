@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Reasoning RAG via System 1 or System 2: A Survey on Reasoning Agentic Retrieval-Augmented Generation for Industry Challenges"
+title: >-
+  【論文要約】 Reasoning RAG via System 1 or System 2: A Survey on Reasoning Agentic
+  Retrieval-Augmented Generation for Industry Challenges
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-15T06:32:38+09:00'
+id: f89773b34ea4132a5481
 organization_url_name: null
 slide: false
 ignorePublish: false

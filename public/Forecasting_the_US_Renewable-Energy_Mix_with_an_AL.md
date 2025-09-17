@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Forecasting the US Renewable-Energy Mix with an ALR-BDARMA Compositional Time-Series Framework"
+title: >-
+  【論文要約】 Forecasting the US Renewable-Energy Mix with an ALR-BDARMA
+  Compositional Time-Series Framework
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-09-18T06:32:38+09:00'
+id: ceaafcbecc5e45318dc8
 organization_url_name: null
 slide: false
 ignorePublish: false

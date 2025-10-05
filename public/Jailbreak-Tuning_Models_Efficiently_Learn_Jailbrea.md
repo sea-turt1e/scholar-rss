@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Jailbreak-Tuning: Models Efficiently Learn Jailbreak Susceptibility"
+title: '【論文要約】 Jailbreak-Tuning: Models Efficiently Learn Jailbreak Susceptibility'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-06T06:32:43+09:00'
+id: cda80ea5a7776658d166
 organization_url_name: null
 slide: false
 ignorePublish: false

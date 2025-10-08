@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 A Visualization Framework for Exploring Multi-Agent-Based Simulations Case Study of an Electric Vehicle Home Charging Ecosystem"
+title: >-
+  【論文要約】 A Visualization Framework for Exploring Multi-Agent-Based Simulations
+  Case Study of an Electric Vehicle Home Charging Ecosystem
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-09T06:32:48+09:00'
+id: 890d1debeae4e8d84181
 organization_url_name: null
 slide: false
 ignorePublish: false

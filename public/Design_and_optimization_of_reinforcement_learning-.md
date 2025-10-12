@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Design and optimization of reinforcement learning-based agents in text-based games"
+title: >-
+  【論文要約】 Design and optimization of reinforcement learning-based agents in
+  text-based games
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-13T06:32:32+09:00'
+id: 334ede14cac1d3d2265c
 organization_url_name: null
 slide: false
 ignorePublish: false

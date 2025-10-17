@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 DriveIndia: An object detection dataset for diverse Indian traffic scenes"
+title: >-
+  【論文要約】 DriveIndia: An object detection dataset for diverse Indian traffic
+  scenes
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-18T06:32:35+09:00'
+id: fdcbbada138626e6d1bf
 organization_url_name: null
 slide: false
 ignorePublish: false

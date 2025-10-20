@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Code with Me or for Me? How Increasing AI Automation Transforms Developer Workflows"
+title: >-
+  【論文要約】 Code with Me or for Me? How Increasing AI Automation Transforms
+  Developer Workflows
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-21T06:33:31+09:00'
+id: 2b5ea5fb10270a27fa61
 organization_url_name: null
 slide: false
 ignorePublish: false

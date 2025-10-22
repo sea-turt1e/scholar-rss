@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 The Many Challenges of Human-Like Agents in Virtual Game Environments"
+title: 【論文要約】 The Many Challenges of Human-Like Agents in Virtual Game Environments
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-23T06:32:48+09:00'
+id: 4055579cc7c5c11be034
 organization_url_name: null
 slide: false
 ignorePublish: false

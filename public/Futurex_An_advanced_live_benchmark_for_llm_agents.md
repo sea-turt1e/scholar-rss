@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Futurex: An advanced live benchmark for llm agents in future prediction"
+title: '【論文要約】 Futurex: An advanced live benchmark for llm agents in future prediction'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-25T06:32:52+09:00'
+id: ed53e2c694c3c85b34bb
 organization_url_name: null
 slide: false
 ignorePublish: false

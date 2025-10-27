@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Electricity Demand and Grid Impacts of AI Data Centers: Challenges and Prospects"
+title: >-
+  【論文要約】 Electricity Demand and Grid Impacts of AI Data Centers: Challenges and
+  Prospects
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-10-28T06:33:01+09:00'
+id: 6658fe8c73d945d4220a
 organization_url_name: null
 slide: false
 ignorePublish: false

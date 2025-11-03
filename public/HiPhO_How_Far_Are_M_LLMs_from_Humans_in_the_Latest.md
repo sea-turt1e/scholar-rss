@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 HiPhO: How Far Are (M) LLMs from Humans in the Latest High School Physics Olympiad Benchmark?"
+title: >-
+  【論文要約】 HiPhO: How Far Are (M) LLMs from Humans in the Latest High School
+  Physics Olympiad Benchmark?
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-11-04T06:33:21+09:00'
+id: ec1d65e7fce191370075
 organization_url_name: null
 slide: false
 ignorePublish: false

@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Agentic Software Engineering: Foundational Pillars and a Research Roadmap"
+title: >-
+  【論文要約】 Agentic Software Engineering: Foundational Pillars and a Research
+  Roadmap
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-11-06T06:33:17+09:00'
+id: 96cfc760cdb1d488be06
 organization_url_name: null
 slide: false
 ignorePublish: false

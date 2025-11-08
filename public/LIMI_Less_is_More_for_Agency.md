@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 LIMI: Less is More for Agency"
+title: '【論文要約】 LIMI: Less is More for Agency'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-11-09T06:32:31+09:00'
+id: 437102beb35e1e523d7c
 organization_url_name: null
 slide: false
 ignorePublish: false

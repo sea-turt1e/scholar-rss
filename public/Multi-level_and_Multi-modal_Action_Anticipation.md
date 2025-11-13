@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Multi-level and Multi-modal Action Anticipation"
+title: 【論文要約】 Multi-level and Multi-modal Action Anticipation
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-11-14T06:32:37+09:00'
+id: a9ef2538417e2105bdbd
 organization_url_name: null
 slide: false
 ignorePublish: false

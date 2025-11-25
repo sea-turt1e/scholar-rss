@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 AI use in American newspapers is widespread, uneven, and rarely disclosed"
+title: >-
+  【論文要約】 AI use in American newspapers is widespread, uneven, and rarely
+  disclosed
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-11-26T06:34:07+09:00'
+id: b5830115bffb696f91f6
 organization_url_name: null
 slide: false
 ignorePublish: false

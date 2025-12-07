@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Intelligence per watt: Measuring intelligence efficiency of local ai"
+title: '【論文要約】 Intelligence per watt: Measuring intelligence efficiency of local ai'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-12-08T06:32:39+09:00'
+id: b8db09519f593fd611b9
 organization_url_name: null
 slide: false
 ignorePublish: false

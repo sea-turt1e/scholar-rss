@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Beyond the Hype: Critical Analysis of Student Motivations and Ethical Boundaries in Educational AI Use in Higher Education"
+title: >-
+  【論文要約】 Beyond the Hype: Critical Analysis of Student Motivations and Ethical
+  Boundaries in Educational AI Use in Higher Education
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-12-16T06:35:21+09:00'
+id: b365da5eeb95f4fe0412
 organization_url_name: null
 slide: false
 ignorePublish: false

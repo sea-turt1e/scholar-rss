@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 A Research Roadmap for Augmenting Software Engineering Processes and Software Products with Generative AI"
+title: >-
+  【論文要約】 A Research Roadmap for Augmenting Software Engineering Processes and
+  Software Products with Generative AI
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2025-12-21T06:32:55+09:00'
+id: 8d3a960b5ae3a47f5ae6
 organization_url_name: null
 slide: false
 ignorePublish: false

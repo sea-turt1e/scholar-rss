@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 From Opinion Polarization to Climate Action: A Social-Climate Model of the Opinion Spectrum"
+title: >-
+  【論文要約】 From Opinion Polarization to Climate Action: A Social-Climate Model of
+  the Opinion Spectrum
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-01-03T06:33:34+09:00'
+id: 34481c2e6ec0aa15af7a
 organization_url_name: null
 slide: false
 ignorePublish: false

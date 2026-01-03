@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 Thought Crime: Backdoors and Emergent Misalignment in Reasoning Models"
+title: '【論文要約】 Thought Crime: Backdoors and Emergent Misalignment in Reasoning Models'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-01-04T06:34:11+09:00'
+id: a0270d24aeb1b6e97847
 organization_url_name: null
 slide: false
 ignorePublish: false

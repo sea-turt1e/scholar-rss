@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Finsearchcomp: Towards a realistic, expert-level evaluation of financial search and reasoning"
+title: >-
+  【論文要約】 Finsearchcomp: Towards a realistic, expert-level evaluation of
+  financial search and reasoning
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-01-05T06:34:17+09:00'
+id: 6468fb1d3bc462975650
 organization_url_name: null
 slide: false
 ignorePublish: false

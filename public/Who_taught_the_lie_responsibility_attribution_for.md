@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Who taught the lie? responsibility attribution for poisoned knowledge in retrieval-augmented generation"
+title: >-
+  【論文要約】 Who taught the lie? responsibility attribution for poisoned knowledge
+  in retrieval-augmented generation
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-01-08T06:35:48+09:00'
+id: 18b6fbca5b6d72248590
 organization_url_name: null
 slide: false
 ignorePublish: false

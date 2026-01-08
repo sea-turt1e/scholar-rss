@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Sustainable Aviation Fuels: Opportunities, Alternatives and Challenges for Decarbonizing the Aviation Industry and Foster the Renewable Chemicals"
+title: >-
+  【論文要約】 Sustainable Aviation Fuels: Opportunities, Alternatives and Challenges
+  for Decarbonizing the Aviation Industry and Foster the Renewable Chemicals
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-01-09T06:36:21+09:00'
+id: 345fd4f2a4afdc9a27da
 organization_url_name: null
 slide: false
 ignorePublish: false

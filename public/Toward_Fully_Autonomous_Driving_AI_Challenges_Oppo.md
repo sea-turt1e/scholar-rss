@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Toward Fully Autonomous Driving: AI, Challenges, Opportunities, and Needs"
+title: >-
+  【論文要約】 Toward Fully Autonomous Driving: AI, Challenges, Opportunities, and
+  Needs
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-02-08T06:39:44+09:00'
+id: 8eb7319f35dda58a0f92
 organization_url_name: null
 slide: false
 ignorePublish: false

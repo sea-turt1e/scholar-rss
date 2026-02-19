@@ -1,13 +1,13 @@
 ---
-title: "【論文要約】 SERA: Soft-Verified Efficient Repository Agents"
+title: '【論文要約】 SERA: Soft-Verified Efficient Repository Agents'
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-02-20T06:43:32+09:00'
+id: 77d8937b20cf30d54a88
 organization_url_name: null
 slide: false
 ignorePublish: false

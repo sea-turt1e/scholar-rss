@@ -1,13 +1,15 @@
 ---
-title: "【論文要約】 Deep learning for classifying dynamical states from time series via recurrence plots"
+title: >-
+  【論文要約】 Deep learning for classifying dynamical states from time series via
+  recurrence plots
 tags:
-  - "機械学習"
-  - "AI"
-  - "論文"
-  - "arXiv"
+  - 機械学習
+  - 論文
+  - AI
+  - arXiv
 private: false
-updated_at: ""
-id: null
+updated_at: '2026-02-23T06:38:35+09:00'
+id: 2b1550944830fdc8d24a
 organization_url_name: null
 slide: false
 ignorePublish: false

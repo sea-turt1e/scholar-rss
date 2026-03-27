@@ -1,9 +1,9 @@
 name: Daily Scholar Papers Fetch
 
 on:
-  schedule:
-    # 毎日6:00 JST (UTC 21:00前日) に実行
-    - cron: '0 21 * * *'
+  # schedule:
+  #   # 毎日6:00 JST (UTC 21:00前日) に実行
+  #   - cron: '0 21 * * *'
   workflow_dispatch: # 手動実行も可能
 
 permissions:
